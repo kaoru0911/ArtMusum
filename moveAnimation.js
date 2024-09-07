@@ -1,5 +1,5 @@
 
-    document.addEventListener('keydown', function (event) {
+   document.addEventListener('keydown', function (event) {
         var cameraEl = document.querySelector('#camera');
         var currentPosition = cameraEl.getAttribute('position');
         var currentRotation = cameraEl.getAttribute('rotation');
