@@ -1,4 +1,5 @@
 
+
         // 监听点击事件
         document.querySelector('a-scene').addEventListener('click', function (event) {
             var cameraEl = document.querySelector('#camera');

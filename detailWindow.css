@@ -1,0 +1,57 @@
+/* styles.css */
+
+/* 全螢幕黑色透明遮罩 */
+#popupOverlay {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none; /* 默認隱藏 */
+}
+
+/* 中心 UI，設為螢幕的80%大小 */
+#popupUI {
+  width: 80%;
+  height: auto;
+  background-color: rgba(255, 255, 255, 0.8);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  box-sizing: border-box;
+  display: none; /* 默認隱藏 */
+}
+
+/* 圖片區域靠左 */
+#popupImage {
+  float: left;
+  width: 30%;
+  height: auto;
+}
+
+/* 文字區域靠右 */
+#popupText {
+  float: right;
+  width: 65%;
+  color: #000;
+  text-align: left;
+  font-size: 1.5em;
+}
+
+/* 關閉按鈕，放在右上角 */
+#closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 50px;
+  height: 50px;
+  background-color: red;
+  color: white;
+  font-size: 2em;
+  text-align: center;
+  line-height: 50px;
+  cursor: pointer;
+}

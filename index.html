@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+<meta charset="utf-8" />
 
 <head>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <!-- 連結外部 CSS 檔案 -->
+    <link rel="stylesheet" href="detailWindow.css">
 </head>
 
 <body>
@@ -11,43 +14,90 @@
         <a-entity cursor="fuse: false; rayOrigin: mouse" raycaster="objects: .clickable"></a-entity>
 
         <!-- 相机 -->
-        <a-entity id="camera" camera position="0 30 0" look-controls></a-entity>
+        <a-entity id="camera" camera position="0 50 0" look-controls></a-entity>
 
         <!-- 地板 -->
-        <a-entity class="clickable" gltf-model="Assets/testFloor.glb" position="0 0 0" scale="2 2 2"></a-entity>
+        <a-entity class="clickable"
+            gltf-model="https://cdn.glitch.me/9b9a6d10-2c44-4e16-b108-24cab08209d5/testFloor.glb?v=1725533163032"
+            position="0 0 0" scale="2 2 2"></a-entity>
 
         <!-- 场馆 -->
-        <a-entity gltf-model="Assets/testWall.glb" position="0 0 0" scale="2 2 2"></a-entity>
+        <a-entity
+            gltf-model="https://cdn.glitch.global/9b9a6d10-2c44-4e16-b108-24cab08209d5/testWall.glb?v=1725533151841"
+            position="0 0 0" scale="2 2 2"></a-entity>
 
         <!-- 图片 -->
-        <a-image class="clickable" id="popupImage" src="Assets/imageTest.png" position="0 50 -290"
-            scale="100 50"></a-image>
+        <a-image class="clickable" id="popupImage"
+            src="https://cdn.glitch.global/9b9a6d10-2c44-4e16-b108-24cab08209d5/%E6%9C%AA%E5%91%BD%E5%90%8D%E7%9A%84%E4%BD%9C%E5%93%81%202.png?v=1725539764903"
+            position="0 50 -290" scale="100 50"></a-image>
 
-        <!-- 模态框 - 默认隐藏 -->
-        <a-plane id="popupUI" class="popup-element" position="0 30 -150" width="6" height="3"
-            color="rgba(255, 255, 255, 0.5)" visible="false">
-            <!-- 图片靠左置中 -->
-            <a-image src="Assets/imageTest.png" position="-2.5 0 0.1" width="2" height="2"></a-image>
+        <!-- 全屏遮罩和彈窗內容 -->
+        <a-plane id="popupOverlay" position="0 50 -0.5" width="100" height="100" color="black" opacity="0.7"
+            visible="false"></a-plane>
+        <a-plane id="popupUI" position="0 50 -150" width="20" height="10" color="white" visible="false">
+            <!-- 图片 -->
+            <a-image src="Assets/imageTest.png" position="-6 0 0.1" width="100" height="100"></a-image>
 
-            <!-- 文字，放在右侧 -->
-            <a-text value="这是弹出的 UI 窗口内容" color="#000" position="2 0 0.1" width="3"></a-text>
+            <!-- 文字 -->
+            <a-text value="这是全屏幕的UI窗口内容" color="black" position="4 0 0.1" width="8"></a-text>
 
-            <!-- 关闭按钮，右上角 -->
-            <a-box id="closeButton" class="clickable" position="2.75 1.25 0.1" width="0.5" height="0.5" depth="0.2"
+            <!-- 关闭按钮 -->
+            <a-box id="closeButton" class="clickable" position="100 100 0.1" width="10" height="10" depth="0.2"
                 color="red"></a-box>
-            <a-text value="X" color="white" position="2.6 1.25 0.2"></a-text>
+            <a-text value="X" color="white" position="7.75 4 0.2"></a-text>
         </a-plane>
 
         <!-- 天空背景 -->
         <a-sky color="#ECECEC"></a-sky>
     </a-scene>
 
-    <!-- 引入外部 JavaScript 文件 -->
-    <!-- <script src="moveAnimation.js"></script> -->
-    <script src="clickImageUI.js"></script>
-    <script src="clickToMove.js"></script>
-    
+    <script>
+        window.addEventListener('load', function () {
+            var imageEl = document.querySelector('#popupImage');
+            var popupUIEl = document.querySelector('#popupUI');
+            var popupOverlayEl = document.querySelector('#popupOverlay');
+            var closeButtonEl = document.querySelector('#closeButton');
+            var cameraEl = document.querySelector('#camera');
 
+            // 模擬相機控制器啟用/禁用的狀態
+            var cameraControllerEnabled = true;
+
+            // 啟用或禁用相機控制
+            function toggleCameraControl(enable) {
+                if (enable) {
+                    cameraEl.setAttribute('look-controls', 'enabled: true');
+                } else {
+                    cameraEl.removeAttribute('look-controls');
+                }
+            }
+
+            // 绑定图片点击事件，显示全屏窗口并禁用相机控制
+            imageEl.addEventListener('click', function (event) {
+                event.stopPropagation();
+                popupUIEl.setAttribute('visible', true);
+                popupOverlayEl.setAttribute('visible', true); // 顯示黑色背景遮罩
+                toggleCameraControl(false);
+            });
+
+            // 监听关闭按钮的点击事件，点击时关闭全屏窗口并启用相机控制
+            closeButtonEl.addEventListener('click', function (event) {
+                event.stopPropagation();
+                popupUIEl.setAttribute('visible', false);
+                popupOverlayEl.setAttribute('visible', false); // 隱藏黑色背景遮罩
+                toggleCameraControl(true);
+            });
+
+            // 监听场景的点击事件，点击 UI 外部区域时关闭弹窗并恢复相机控制
+            document.querySelector('a-scene').addEventListener('click', function (event) {
+                var target = event.target;
+                if (popupUIEl.getAttribute('visible') === "true" && target !== popupUIEl && target !== closeButtonEl) {
+                    popupUIEl.setAttribute('visible', false);
+                    popupOverlayEl.setAttribute('visible', false); // 隱藏黑色背景遮罩
+                    toggleCameraControl(true);
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
