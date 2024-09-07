@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+</head>
+
+<body>
+    <a-scene>
+        <!-- 光标 (鼠标或触摸) -->
+        <a-entity cursor="fuse: false; rayOrigin: mouse" raycaster="objects: .clickable"></a-entity>
+
+        <!-- 相机 -->
+        <a-entity id="camera" camera position="0 10 0" look-controls></a-entity>
+
+        <!-- 物体 -->
+        <a-entity class="clickable"
+            gltf-model="https://cdn.glitch.global/9b9a6d10-2c44-4e16-b108-24cab08209d5/testWall.glb?v=1725457856550"
+            position="0 0 -5" scale="2 2 2"></a-entity>
+
+        <!-- 天空背景 -->
+        <a-sky color="#ECECEC"></a-sky>
+    </a-scene>
+
+    <script>
+        // 监听点击事件
+        document.querySelector('a-scene').addEventListener('click', function (event) {
+            var cameraEl = document.querySelector('#camera');
+
+            // 获取点击位置
+            var intersection = event.detail.intersection;
+            if (intersection) {
+                var newPosition = intersection.point;
+
+                // 仅移动在 X 和 Z 轴上，保持相机高度为 10
+                newPosition.y = cameraEl.getAttribute('position').y;
+
+                // 添加平滑移动动画
+                cameraEl.setAttribute('animation', {
+                    property: 'position',
+                    to: `${newPosition.x} ${newPosition.y} ${newPosition.z}`,
+                    dur: 1000,  // 动画持续时间为 1000ms
+                    easing: 'easeInOutQuad'
+                });
+            }
+        });
+    </script>
+
+
+</body>
+
+</html>
