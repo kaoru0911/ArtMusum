@@ -14,30 +14,27 @@
         <a-entity id="camera" camera position="0 30 0" look-controls></a-entity>
 
         <!-- 地板 -->
-        <a-entity class="clickable"
-            gltf-model="Assets/testFloor.glb"
-            position="0 0 0" scale="2 2 2"></a-entity>
+        <a-entity class="clickable" gltf-model="Assets/testFloor.glb" position="0 0 0" scale="2 2 2"></a-entity>
 
         <!-- 场馆 -->
-        <a-entity 
-            gltf-model="Assets/testWall.glb"
-            position="0 0 0" scale="2 2 2"></a-entity>
+        <a-entity gltf-model="Assets/testWall.glb" position="0 0 0" scale="2 2 2"></a-entity>
 
-        <!-- 图片 --> 
-        <a-image class="clickable" id="popupImage" src="Assets/imageTest.png" 
-            position="0 50 -290" scale="100 50"></a-image>
+        <!-- 图片 -->
+        <a-image class="clickable" id="popupImage" src="Assets/imageTest.png" position="0 50 -290"
+            scale="100 50"></a-image>
 
         <!-- 模态框 - 默认隐藏 -->
-        <a-plane id="popupUI" class="popup-element" position="0 30 -150" width="6" height="3" color="rgba(255, 255, 255, 0.5)" visible="false">
+        <a-plane id="popupUI" class="popup-element" position="0 30 -150" width="6" height="3"
+            color="rgba(255, 255, 255, 0.5)" visible="false">
             <!-- 图片靠左置中 -->
-            <a-image src="Assets/imageTest.png" 
-                     position="-2.5 0 0.1" width="2" height="2"></a-image>
-            
+            <a-image src="Assets/imageTest.png" position="-2.5 0 0.1" width="2" height="2"></a-image>
+
             <!-- 文字，放在右侧 -->
             <a-text value="这是弹出的 UI 窗口内容" color="#000" position="2 0 0.1" width="3"></a-text>
-            
+
             <!-- 关闭按钮，右上角 -->
-            <a-box id="closeButton" class="clickable" position="2.75 1.25 0.1" width="0.5" height="0.5" depth="0.2" color="red"></a-box>
+            <a-box id="closeButton" class="clickable" position="2.75 1.25 0.1" width="0.5" height="0.5" depth="0.2"
+                color="red"></a-box>
             <a-text value="X" color="white" position="2.6 1.25 0.2"></a-text>
         </a-plane>
 
@@ -46,8 +43,10 @@
     </a-scene>
 
     <!-- 引入外部 JavaScript 文件 -->
+    <!-- <script src="moveAnimation.js"></script> -->
     <script src="clickImageUI.js"></script>
-    <script src="moveAnimation.js"></script>
+    <script src="clickToMove.js"></script>
+    
 
 </body>
 
