@@ -1,0 +1,53 @@
+button {
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+#popupUI {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+#popupUI>div {
+    position: relative;
+    background: white;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+}
+
+#popupUI>div::after {
+    content: attr(data-text);
+}
+
+#popupUI img {
+    width: 60%;
+}
+
+@media (max-width: 450px) {
+    #popupUI>div {
+        flex-flow: column;
+    }
+
+    #popupUI img {
+        width: 100%;
+    }
+}
+
+#closeButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 5px;
+}
