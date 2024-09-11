@@ -12,7 +12,7 @@
         <a-entity cursor="fuse: false; rayOrigin: mouse" raycaster="objects: .clickable"></a-entity>
 
         <!-- 相机 -->
-        <a-entity id="camera" camera position="0 30 0"
+        <a-entity id="camera" camera position="0 30 0" wasd-rotate-controls
             look-controls="reverseMouseDrag: ture; reverseTouchDrag: true;"></a-entity>
 
         <!-- 地板 -->
@@ -50,6 +50,7 @@
     <!-- 引入外部 JavaScript 文件 -->
     <script src="clickImageUI.js"></script>
     <script src="clickToMove.js"></script>
+    <script src="wasdRotate.js"></script>
 </body>
 
 </html>
