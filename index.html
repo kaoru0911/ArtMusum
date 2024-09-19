@@ -13,16 +13,19 @@
 
         <!-- 相机 -->
         <a-entity id="camera" camera position="0 15 0" wasd-rotate-controls
-            look-controls="reverseMouseDrag: ture; reverseTouchDrag: true;"></a-entity>
+            look-controls="reverseMouseDrag: false; reverseTouchDrag: false;"></a-entity>
+
+        <!-- 燈光 -->
+        <a-light type="ambient" color="#ffffff"></a-light>
 
         <!-- 地板 -->
         <a-entity id="floor" class="clickable"
-            gltf-model="https://cdn.glitch.global/eb7d671d-a706-4b46-a49a-560ff977c9bb/artMuseumFloorTest7-2.glb?v=1726505473932"
+            gltf-model="https://cdn.glitch.global/eb7d671d-a706-4b46-a49a-560ff977c9bb/artMuseumFloorTest10.glb?v=1726752999520"
             position="0 0 0" scale="10 10 10"></a-entity>
 
         <!-- 场馆 -->
         <a-entity
-            gltf-model="https://cdn.glitch.global/eb7d671d-a706-4b46-a49a-560ff977c9bb/artMuseumWallTest7-2.glb?v=1726505469704"
+            gltf-model="https://cdn.glitch.global/eb7d671d-a706-4b46-a49a-560ff977c9bb/artMuseumWallTest11.glb?v=1726752487252"
             position="0 0 0" scale="10 10 10"></a-entity>
 
         <!-- 图片＆影片 -->
@@ -156,10 +159,9 @@
             src="https://cdn.glitch.global/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/5.%E5%86%AC_2023_68x137cm.JPG?v=1726460081232"
             data-text="冬" position="397.5 23.18 54.976" scale="15.079 33.68 90.899" rotation="0 -90 0"></a-image>
         <!-- 天空背景 -->
-        <!--<a-sky
-        color="https://cdn.glitch.global/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/panorama-shot-canal-lake-pukaki-twisel-surrounded-with-mountains.jpg?v=1726480294831"
-      ></a-sky>
-      <a-sky color="#ECECEC"></a-sky>-->
+        <a-sky
+            src="https://cdn.glitch.global/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/panorama-shot-canal-lake-pukaki-twisel-surrounded-with-mountains.jpg?v=1726480294831"></a-sky>
+        <!-- <a-sky color="#ECECEC"></a-sky> -->
     </a-scene>
 
     <div id="popupUI" class="mask">
@@ -175,6 +177,7 @@
     <!-- 引入外部 JavaScript 文件 -->
     <script src="clickImageUI.js"></script>
     <script src="clickToMove.js"></script>
+    <script src="playBGmusic.js"></script>
     <!--     <script src="wasdRotate.js"></script> -->
     <script src="playVideo.js"></script>
 </body>
