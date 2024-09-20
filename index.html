@@ -73,21 +73,27 @@
             src="https://cdn.glitch.global/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/lifu_%E5%8F%B33-1.png?v=1726447237910"
             data-text="爆破寫生" position="-358.21555 25 69.5" scale="62.81364 49.48278 85.53837"
             rotation="0 180 0"></a-image>
-        <!-- <a-video
+        <a-image class="clickable"
+            src="https://cdn.glitch.global/eb7d671d-a706-4b46-a49a-560ff977c9bb/%E6%88%AA%E5%9C%96%202024-09-20%2015.47.13.png?v=1726818510835"
+            data-video-src="https://cdn.glitch.me/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/Jade-like%20colors-Chinese_V2.mp4?v=1726418855702"
+            data-text="李談玉質化色彩影片" position="-398.16061 25.119 27.489" scale="45.107 29.972 61.426"
+            rotation="0 90 0"></a-image>
+        <!--       <a-video
         class="clickable"
-        autoplay=""
-        loop="false"
+        autoplay="false"
+        loop
         id="Video"
         src="https://cdn.glitch.me/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/Jade-like%20colors-Chinese_V2.mp4?v=1726418855702"
         data-text="李談玉質化色彩"
         position="-398.16061 25.119 27.489"
         scale="45.107 29.972 61.426"
         rotation="0 90 0"
-      ></a-video> -->
+      ></a-video>  -->
+
         <!-- 添加按钮来播放影片 -->
         <!--       <a-entity id="playButton" geometry="primitive: plane; height: 0.5; width: 1"
                 material="color: green" position="-448.96472 26 27.4889" text="value: Play Video; color: white"
-                onclick="playVideo()"></a-entity> -->
+                onclick="playVideo()"></a-entity>  -->
         <a-image class="clickable"
             src="https://cdn.glitch.global/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/lifu_%E5%8F%B32.png?v=1726418086491"
             data-text="玉質化色彩" position="-398.16061 25 -26.181" scale="54.632 47.77215 -15.972"
@@ -167,19 +173,31 @@
     <div id="popupUI" class="mask">
         <div>
             <img />
-            <dvi>
+            <div>
                 <p />
-            </dvi>
+            </div>
             <button id="closeButton">X</button>
         </div>
     </div>
 
+    <div id="popupVideo" class="mask">
+        <div>
+            <video />
+            <div>
+                <p />
+            </div>
+            <button id="closeButton2">X</button>
+        </div>
+    </div>
+
     <!-- 引入外部 JavaScript 文件 -->
-    <script src="clickImageUI.js"></script>
+    <!--      <script src="clickImageUI.js"></script>-->
     <script src="clickToMove.js"></script>
     <script src="playBGmusic.js"></script>
+    <script src="clickUI.js"></script>
+    <!--     <script src="clickVideoUI.js"></script>-->
     <!--     <script src="wasdRotate.js"></script> -->
-    <script src="playVideo.js"></script>
+
 </body>
 
 </html>
