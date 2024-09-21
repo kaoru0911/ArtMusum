@@ -12,7 +12,7 @@
         <a-entity cursor="fuse: false; rayOrigin: mouse" raycaster="objects: .clickable"></a-entity>
 
         <!-- 相机 -->
-        <a-entity id="camera" camera position="0 15 0" wasd-rotate-controls
+        <a-entity id="camera" camera position="0 20 0" wasd-rotate-controls
             look-controls="reverseMouseDrag: false; reverseTouchDrag: false;"></a-entity>
 
         <!-- 燈光 -->
@@ -23,6 +23,21 @@
             gltf-model="https://cdn.glitch.global/eb7d671d-a706-4b46-a49a-560ff977c9bb/artMuseumFloorTest10.glb?v=1726752999520"
             position="0 0 0" scale="10 10 10"></a-entity>
 
+
+        <!-- spot1-->
+        <a-entity class="spot clickable" geometry="primitive: plane; height: 10; width: 10" material="color: blue"
+            position="0 1 -109.09145" rotation="-90 0 0" shadow="" scale=""></a-entity>
+
+        <!-- spot2-->
+        <a-entity class="spot clickable" geometry="primitive: plane; height: 10; width: 10" material="color: blue"
+            position="0 1 -38.87313" rotation="-90 0 0" shadow="" scale=""></a-entity>
+        <!-- spot3-->
+        <a-entity class="spot clickable" geometry="primitive: plane; height: 10; width: 10" material="color: blue"
+            position="-89.35896 1 -38.87313" rotation="-90 0 0" shadow="" scale=""></a-entity>
+
+        <!-- spot4-->
+        <a-entity class="spot clickable" geometry="primitive: plane; height: 10; width: 10" material="color: blue"
+            position="-185.71439 1 -38.873" rotation="-90 0 0" shadow="" scale=""></a-entity>
         <!-- 场馆 -->
         <a-entity
             gltf-model="https://cdn.glitch.global/eb7d671d-a706-4b46-a49a-560ff977c9bb/artMuseumWallTest11.glb?v=1726752487252"
@@ -192,12 +207,11 @@
 
     <!-- 引入外部 JavaScript 文件 -->
     <!--      <script src="clickImageUI.js"></script>-->
-    <script src="clickToMove.js"></script>
-    <script src="playBGmusic.js"></script>
+    <!--<script src="clickToMove.js"></script>-->
+    <script src="moveToSpot.js"></script>
     <script src="clickUI.js"></script>
     <!--     <script src="clickVideoUI.js"></script>-->
     <!--     <script src="wasdRotate.js"></script> -->
-
 </body>
 
 </html>
