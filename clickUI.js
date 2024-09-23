@@ -1,5 +1,4 @@
 window.addEventListener("load", function () {
-  // 确保页面加载完成后再绑定事件
   var popupVideoEl = document.querySelector("#popupVideo");
   var popupImgEl = document.querySelector("#popupUI");
   var closeButton2El = document.querySelector("#closeButton2");
@@ -12,13 +11,14 @@ window.addEventListener("load", function () {
       var videoSrc = target.getAttribute("data-video-src");
 
       if (videoSrc) {
-        // 如果有 data-video-src 属性，显示视频弹窗并播放视频
         var videoEl = popupVideoEl.querySelector("video");
         videoEl.setAttribute("src", videoSrc);
-        videoEl.play(); // 播放影片
+        videoEl.play();
+        popupVideoEl
+          .querySelector("div")
+          .setAttribute("data-text", target.getAttribute("data-text"));
         popupVideoEl.style.display = "flex";
       } else {
-        // 如果没有 data-video-src 属性，显示图片弹窗
         popupImgEl
           .querySelector("img")
           .setAttribute("src", target.getAttribute("src"));
@@ -33,7 +33,7 @@ window.addEventListener("load", function () {
   // 监听关闭按钮的点击事件，点击时关闭视频弹窗并停止影片播放
   closeButton2El.addEventListener("click", function (event) {
     var videoEl = popupVideoEl.querySelector("video");
-    videoEl.pause(); // 停止影片播放
+    videoEl.pause();
     popupVideoEl.style.display = "none";
   });
 
@@ -43,14 +43,16 @@ window.addEventListener("load", function () {
   });
 
   // 点击遮罩层时关闭视频和图片弹窗
-  document.body.addEventListener("click", function (event) {
-    var target = event.target;
-    var maskEl = document.querySelector(".mask");
-
-    if (target === maskEl) {
+  popupVideoEl.addEventListener("click", function (event) {
+    if (event.target === popupVideoEl) {
       var videoEl = popupVideoEl.querySelector("video");
-      videoEl.pause(); // 停止影片播放
+      videoEl.pause();
       popupVideoEl.style.display = "none";
+    }
+  });
+
+  popupImgEl.addEventListener("click", function (event) {
+    if (event.target === popupImgEl) {
       popupImgEl.style.display = "none";
     }
   });

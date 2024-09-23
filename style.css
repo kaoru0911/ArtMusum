@@ -80,7 +80,7 @@ button {
     gap: 10px;
     height: 80%;
     width: 80%;
-    border-radius: 10px
+    border-radius: 10px;
 }
 
 #popupVideo>div::after {
@@ -95,13 +95,13 @@ button {
 }
 
 @media (max-width: 450px) {
-    #popupUI>div {
+    #popupVideo>div {
         flex-flow: column;
     }
 
-    #popupUI video {
+    #popupVideo video {
         width: 80%;
-        border-radius: 10px
+        border-radius: 10px;
     }
 }
 
