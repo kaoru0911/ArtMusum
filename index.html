@@ -4,443 +4,817 @@
 <head>
     <link rel="stylesheet" href="./style.css" />
     <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+    <script src="https://kit.fontawesome.com/d81788aace.js" crossorigin="anonymous"></script>
+    <title>Lifu Art Museum</title>
+    <meta name="description" content="Lifu Art Museum" />
+    <!-- Open Graph 標籤，用於社交媒體分享的預覽 -->
+    <meta property="og:title" content="Lifu Art Museum" />
+    <meta property="og:description" content="Lifu Art Museum" />
 </head>
 
 <body>
-    <a-scene>
+    <a-scene xr-mode-ui="enabled: false">
         <!-- 光标 (鼠标或触摸) -->
         <a-entity cursor="fuse: false; rayOrigin: mouse" raycaster="objects: .clickable"></a-entity>
 
         <!-- 相机 -->
-        <a-entity id="camera" camera position="0 20 0" wasd-rotate-controls
-            look-controls="reverseMouseDrag: false; reverseTouchDrag: false;"></a-entity>
+        <a-entity camera id="camera" zoom="1" wasd-controls="acceleration: 300" position="0 35 0" rotation="0 0 0"
+            look-controls="reverseMouseDrag: true; reverseTouchDrag: true;"></a-entity>
 
         <!-- 燈光 -->
         <a-light type="ambient" color="#ffffff"></a-light>
 
-        <!-- 地板 -->
-        <a-entity id="floor" class="clickable"
-            gltf-model="https://cdn.glitch.global/dd0ba543-7840-4c27-872a-51603188d5db/artMuseumFloorTest11-11.glb?v=1727162067569"
-            position="0 0 0" scale="10 10 10"></a-entity>
-
-        <!-- spot1-->
-        <a-entity class="spot clickable" geometry="primitive: plane; height: 10; width: 10" material="color: blue"
-            position="-10.41433 1 -109.091" rotation="-90 0 0" shadow="" scale=""></a-entity>
-
-        <!-- 連接線-->
-        <a-cylinder position="-10.27639 0.5 -73.49" radius="0.05" height="5" rotation="0 90 90" color="#D3D3D3"
-            geometry="height: 100; radius: 0.3" scale="1 -0.817 1"></a-cylinder>
-
-        <!-- 箭頭1-->
-        <a-entity geometry="primitive: triangle; vertexA: -1 0 0; vertexB: 1 0 0; vertexC: 0 2 0"
-            material="color: #A9A9A9" position="-10.496 1 -67.57502" rotation="-90 -177.56 0" shadow=""
-            scale="2.102 2.102 2.102"></a-entity>
-
-        <!-- spot2-->
-        <a-entity class="spot clickable" geometry="primitive: plane; height: 10; width: 10" material="color: #A9A9A9"
-            position="-10.41433 1 -31.9578" rotation="-90 0 0" shadow="" scale=""></a-entity>
-
-        <!-- 箭頭2-->
-        <a-entity geometry="primitive: triangle; vertexA: -1 0 0; vertexB: 1 0 0; vertexC: 0 2 0"
-            material="color: #A9A9A9" position="-44.2441 1 -32.5" rotation="-90 90 0" shadow=""
-            scale="2.102 2.102 2.102"></a-entity>
-
-        <!-- 超長連接線1-->
-        <a-cylinder position="-183.15477 0.5 -32.5" radius="0.05" height="5" rotation="-90 90 0" color="#D3D3D3"
-            geometry="height: 410; radius: 0.3" scale="1 -0.817 1"></a-cylinder>
-
-        <!-- spot3-->
-        <a-entity class="spot clickable" geometry="primitive: plane; height: 10; width: 10" material="color: #A9A9A9"
-            position="-89.35896 1 -32" rotation="-90 0 0" shadow="" scale=""></a-entity>
-
-        <!-- 箭頭3-->
-        <a-entity geometry="primitive: triangle; vertexA: -1 0 0; vertexB: 1 0 0; vertexC: 0 2 0"
-            material="color: #A9A9A9" position="-133.10376 1 -32.015" rotation="-90 90 0" shadow=""
-            scale="2.102 2.102 2.102"></a-entity>
-
-        <!-- spot4-->
-        <a-entity class="spot clickable" geometry="primitive: plane; height: 10; width: 10" material="color: #A9A9A9"
-            position="-185.71439 1 -32" rotation="-90 0 0" shadow="" scale=""></a-entity>
-
-        <!-- 箭頭4-->
-        <a-entity geometry="primitive: triangle; vertexA: -1 0 0; vertexB: 1 0 0; vertexC: 0 2 0"
-            material="color: #A9A9A9" position="-235.38066 1 -32.015" rotation="-90 90 0" shadow=""
-            scale="2.102 2.102 2.102"></a-entity>
-
-        <!-- spot5-->
-        <a-entity class="spot clickable" geometry="primitive: plane; height: 10; width: 10" material="color: #A9A9A9"
-            position="-285 1 -32" rotation="-90 0 0" shadow="" scale=""></a-entity>
-
-        <!-- 箭頭5-->
-        <a-entity geometry="primitive: triangle; vertexA: -1 0 0; vertexB: 1 0 0; vertexC: 0 2 0"
-            material="color: #A9A9A9" position="-350.2904 1 -32.75606" rotation="-90 180 0" shadow=""
-            scale="2.102 2.102 2.102"></a-entity>
-
-        <!-- 連接橫線-->
-        <a-cylinder position="-350.25097 0.5 -3.3" radius="0.05" height="5" rotation="0 90 90" color="#D3D3D3"
-            geometry="height: 177; radius: 0.3" scale="1 -0.32279 1"></a-cylinder>
-
-        <!-- spot6-->
-        <a-entity class="spot clickable" geometry="primitive: plane; height: 10; width: 10" material="color: #A9A9A9"
-            position="-350.25097 1 0.04264" rotation="-90 0 0" shadow="" scale=""></a-entity>
-
-        <!-- 箭頭6-->
-        <a-entity geometry="primitive: triangle; vertexA: -1 0 0; vertexB: 1 0 0; vertexC: 0 2 0"
-            material="color: #A9A9A9" position="-350.45607 1 25.02366"
-            rotation="-90.00021045914971 -89.47538111880988 0" shadow="" scale="2.102 2.102 2.102"></a-entity>
-
-        <!-- spot7爆破寫生-->
-        <a-entity class="spot clickable" geometry="primitive: plane; height: 10; width: 10" material="color: #A9A9A9"
-            position="-330 1 25" rotation="-90 0 0" shadow="" scale=""></a-entity>
-
-        <!-- 箭頭7-->
-        <a-entity geometry="primitive: triangle; vertexA: -1 0 0; vertexB: 1 0 0; vertexC: 0 2 0"
-            material="color: #A9A9A9" position="-305 1 25.02366" rotation="-90.00021045914971 -89.47538111880988 0"
-            shadow="" scale="2.102 2.102 2.102"></a-entity>
-
-        <!-- spot8爆破寫生-->
-        <a-entity class="spot clickable" geometry="primitive: plane; height: 10; width: 10" material="color: #A9A9A9"
-            position="-280 1 25" rotation="-90 0 0" shadow="" scale=""></a-entity>
-
-        <!-- 箭頭8-->
-        <a-entity geometry="primitive: triangle; vertexA: -1 0 0; vertexB: 1 0 0; vertexC: 0 2 0"
-            material="color: #A9A9A9" position="-237.97319 1 25.02366"
-            rotation="-90.00021045914971 -89.47538111880988 0" shadow="" scale="2.102 2.102 2.102"></a-entity>
-
-        <!-- spot9霹靂繪畫-->
-        <a-entity class="spot clickable" geometry="primitive: plane; height: 10; width: 10" material="color: #A9A9A9"
-            position="-190 1 25" rotation="-90 0 0" shadow="" scale=""></a-entity>
-
-        <!-- 箭頭9-->
-        <a-entity geometry="primitive: triangle; vertexA: -1 0 0; vertexB: 1 0 0; vertexC: 0 2 0"
-            material="color: #A9A9A9" position="-145.22487 1 25.02366"
-            rotation="-90.00021045914971 -89.47538111880988 0" shadow="" scale="2.102 2.102 2.102"></a-entity>
-
-        <!-- spot10霹靂繪畫-->
-        <a-entity class="spot clickable" geometry="primitive: plane; height: 10; width: 10" material="color: #A9A9A9"
-            position="-100 1 25" rotation="-90 0 0" shadow="" scale=""></a-entity>
-
-        <!-- 箭頭10-->
-        <a-entity geometry="primitive: triangle; vertexA: -1 0 0; vertexB: 1 0 0; vertexC: 0 2 0"
-            material="color: #A9A9A9" position="-47.62915 1 25.024" rotation="-90 -89.475 0" shadow=""
-            scale="2.102 2.102 2.102"></a-entity>
-
-        <!-- 長連接線-->
-        <a-cylinder position="-176.41847 0.5 25" radius="0.05" height="5" rotation="-90 90 0" color="#D3D3D3"
-            geometry="height: 425; radius: 0.3" scale="1 -0.817 1"></a-cylinder>
-
-        <!-- spot11中間2-->
-        <a-entity class="spot clickable" geometry="primitive: plane; height: 10; width: 10" material="color: #A9A9A9"
-            position="0 1 23.91714" rotation="-90 0 0" shadow="" scale=""></a-entity>
-
-        <!-- 箭頭11-->
-        <a-entity geometry="primitive: triangle; vertexA: -1 0 0; vertexB: 1 0 0; vertexC: 0 2 0"
-            material="color: #A9A9A9" position="37.9856 1 25.024" rotation="-90 -89.475 0" shadow=""
-            scale="2.102 2.102 2.102"></a-entity>
-
-        <!-- 超長連接線-->
-        <a-cylinder position="165.49385 0.5 25" radius="0.05" height="5" rotation="-90 90 0" color="#D3D3D3"
-            geometry="height: 395; radius: 0.3" scale="1 -0.817 1"></a-cylinder>
-
-        <!-- spot12蓮花寫生-->
-        <a-entity class="spot clickable" geometry="primitive: plane; height: 10; width: 10" material="color: #A9A9A9"
-            position="85 1 25" rotation="-90 0 0" shadow="" scale=""></a-entity>
-
-        <!-- 箭頭12-->
-        <a-entity geometry="primitive: triangle; vertexA: -1 0 0; vertexB: 1 0 0; vertexC: 0 2 0"
-            material="color: #A9A9A9" position="132.82691 1 25.024" rotation="-90 -89.475 0" shadow=""
-            scale="2.102 2.102 2.102"></a-entity>
-
-        <!-- spot13人間仙境-->
-        <a-entity class="spot clickable" geometry="primitive: plane; height: 10; width: 10" material="color: #A9A9A9"
-            position="200 1 25" rotation="-90 0 0" shadow="" scale=""></a-entity>
-
-        <!-- 箭頭13-->
-        <a-entity geometry="primitive: triangle; vertexA: -1 0 0; vertexB: 1 0 0; vertexC: 0 2 0"
-            material="color: #A9A9A9" position="245.37779 1 25.024" rotation="-90 -89.475 0" shadow=""
-            scale="2.102 2.102 2.102"></a-entity>
-
-        <!-- spot14蓮花說-->
-        <a-entity class="spot clickable" geometry="primitive: plane; height: 10; width: 10" material="color: #A9A9A9"
-            position="325 1 25" rotation="-90 0 0" shadow="" scale=""></a-entity>
-
-        <!-- 箭頭14-->
-        <a-entity geometry="primitive: triangle; vertexA: -1 0 0; vertexB: 1 0 0; vertexC: 0 2 0"
-            material="color: #A9A9A9" position="269.63676 1 14.73157" rotation="-90.00021045914971 80 0" shadow=""
-            scale="2.102 2.102 2.102"></a-entity>
-
-        <!-- spot15返回1-->
-        <a-entity class="spot clickable" geometry="primitive: plane; height: 10; width: 10" material="color: #A9A9A9"
-            position="223.03104 1 6.61579" rotation="-90 0 0" shadow="" scale=""></a-entity>
-        <a-entity geometry="primitive: triangle; vertexA: -1 0 0; vertexB: 1 0 0; vertexC: 0 2 0"
-            material="color: #A9A9A9" position="156.41222 1 -5.12849" rotation="-90.00021045914971 80 0" shadow=""
-            scale="2.102 2.102 2.102"></a-entity>
-
-        <!-- spot16返回2-->
-        <a-entity class="spot clickable" geometry="primitive: plane; height: 10; width: 10" material="color: #A9A9A9"
-            position="106.68725 1 -13.53995" rotation="-90 0 0" shadow="" scale=""></a-entity>
-
-        <!-- 箭頭16-->
-        <a-entity geometry="primitive: triangle; vertexA: -1 0 0; vertexB: 1 0 0; vertexC: 0 2 0"
-            material="color: #A9A9A9" position="54.34315 1 -23.11125" rotation="-90.00021045914971 80 0" shadow=""
-            scale="2.102 2.102 2.102"></a-entity>
-
-        <!-- 斜長連接線-->
-        <a-cylinder position="164.96532 0.5 -3.61366" radius="0.05" height="5" rotation="-90 80 0" color="#D3D3D3"
-            geometry="height: 390; radius: 0.3" scale="1 -0.817 1"></a-cylinder>
-
-        <!-- spot17盧的三角點-->
-        <a-entity class="spot clickable" geometry="primitive: plane; height: 10; width: 10" material="color: #A9A9A9"
-            position="10.51393 1 -31.9578" rotation="-90 0 0" shadow="" scale=""></a-entity>
-
-        <!-- 箭頭17-->
-        <a-entity geometry="primitive: triangle; vertexA: -1 0 0; vertexB: 1 0 0; vertexC: 0 2 0"
-            material="color: #A9A9A9" position="10.446 1 -63.33374" rotation="-90 180 180" shadow=""
-            scale="2.102 2.102 2.102"></a-entity>
-
-        <!-- 返回廬連接線-->
-        <a-cylinder position="10.50628 0.5 -73.49" radius="0.05" height="5" rotation="0 90 90" color="#D3D3D3"
-            geometry="height: 100; radius: 0.3" scale="1 -0.817 1"></a-cylinder>
-
-        <!-- spot18盧start-->
-        <a-entity class="spot clickable" geometry="primitive: plane; height: 10; width: 10" material="color: #A9A9A9"
-            position="10.41769 1 -109.091" rotation="-90 0 0" shadow="" scale=""></a-entity>
-
-        <!-- 箭頭18-->
-        <a-entity geometry="primitive: triangle; vertexA: -1 0 0; vertexB: 1 0 0; vertexC: 0 2 0"
-            material="color: #A9A9A9" position="28.691 1 -75.301" rotation="-90 0 -153" shadow=""
-            scale="2.102 2.102 2.102"></a-entity>
-
-        <!-- 往盧畫作連接線1-->
-        <a-cylinder position="25.97996 0.5 -81.53108" radius="0.05" height="5" rotation="0 115 90" color="#D3D3D3"
-            geometry="height: 80; radius: 0.3" scale="1 -0.817 1"></a-cylinder>
-
-        <!-- spot19轉折連接點-->
-        <a-entity class="spot clickable" geometry="primitive: plane; height: 10; width: 10" material="color: #A9A9A9"
-            position="37.47617 1 -53.29285" rotation="-90 0 0" shadow="" scale=""></a-entity>
-
-        <!-- 箭頭19-->
-        <a-entity geometry="primitive: triangle; vertexA: -1 0 0; vertexB: 1 0 0; vertexC: 0 2 0"
-            material="color: #A9A9A9" position="61.44814 1 -44.41597" rotation="-90.00021045914971 -111.8992303468449 0"
-            shadow="" scale="2.102 2.102 2.102"></a-entity>
-
-        <!-- 往盧畫作連接線2-->
-        <a-cylinder position="66.67207 0.5 -42.40181" radius="0.05" height="5" rotation="0 160 90" color="#D3D3D3"
-            geometry="height: 70; radius: 0.3" scale="1 -0.817 1"></a-cylinder>
-
-        <!-- spot20嶺南畫派-->
-        <a-entity class="spot clickable" geometry="primitive: plane; height: 10; width: 10" material="color: #A9A9A9"
-            position="90 1 -32.063" rotation="-90 0 0" shadow="" scale=""></a-entity>
-
-        <!-- 箭頭20-->
-        <a-entity geometry="primitive: triangle; vertexA: -1 0 0; vertexB: 1 0 0; vertexC: 0 2 0"
-            material="color: #A9A9A9" position="132.827 1 -32.7896" rotation="-90 -89.475 0" shadow=""
-            scale="2.102 2.102 2.102"></a-entity>
-
-        <!-- 超長連接線-->
-        <a-cylinder position="220.12033 0.5 -32.58895" radius="0.05" height="5" rotation="-90 90 0" color="#D3D3D3"
-            geometry="height: 320; radius: 0.3" scale="1 -0.817 1"></a-cylinder>
-
-        <!-- spot20-->
-        <a-entity class="spot clickable" geometry="primitive: plane; height: 10; width: 10" material="color: #A9A9A9"
-            position="190 1 -32.063" rotation="-90 0 0" shadow="" scale=""></a-entity>
-
-        <!-- 箭頭21-->
-        <a-entity geometry="primitive: triangle; vertexA: -1 0 0; vertexB: 1 0 0; vertexC: 0 2 0"
-            material="color: #A9A9A9" position="245.87336 1 -32.7896" rotation="-90 -89.475 0" shadow=""
-            scale="2.102 2.102 2.102"></a-entity>
-
-        <!-- spot22-->
-        <a-entity class="spot clickable" geometry="primitive: plane; height: 10; width: 10" material="color: #A9A9A9"
-            position="315 1 -30" rotation="-90 0 0" shadow="" scale=""></a-entity>
-
-        <!-- 箭頭22-->
-        <a-entity geometry="primitive: triangle; vertexA: -1 0 0; vertexB: 1 0 0; vertexC: 0 2 0"
-            material="color: #A9A9A9" position="349.93652 1 -32.94445" rotation="-89.99963750135457 180 0" shadow=""
-            scale="2.102 2.102 2.102"></a-entity>
-
-        <!-- 橫向連接線-->
-        <a-cylinder position="350 0.5 -19.01226" radius="0.05" height="5" rotation="0 90 90" color="#D3D3D3"
-            geometry="height: 80; radius: 0.3" scale="1 -0.323 1"></a-cylinder>
-
-        <!-- spot23四季end-->
-        <a-entity class="spot clickable" geometry="primitive: plane; height: 10; width: 10" material="color: #A9A9A9"
-            position="350 1 -4.05055" rotation="-90 0 0" shadow="" scale=""></a-entity>
-
         <!-- 场馆 -->
         <a-entity
-            gltf-model="https://cdn.glitch.global/eb7d671d-a706-4b46-a49a-560ff977c9bb/artMuseumWallTest11.glb?v=1726752487252"
+            gltf-model="https://cdn.glitch.global/3522d8d1-2d5c-46f9-abb4-965ea7834ded/artMuseumTest33Wall.glb?v=1734104740350"
+            position="0 0 0" scale="10 10 10"></a-entity>
+
+        <!-- 地板 -->
+        <a-entity
+            gltf-model="https://cdn.glitch.global/3522d8d1-2d5c-46f9-abb4-965ea7834ded/artMuseumTest33-2Floor.glb?v=1734104967911"
             position="0 0 0" scale="10 10 10"></a-entity>
 
         <!-- 图片＆影片 -->
-        <a-image class="clickable"
-            src="https://cdn.glitch.global/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/4.%E8%93%AE%E8%8A%B1%E8%AA%AA(%E5%9C%96%E4%B8%8D%E5%A4%A0%E5%86%8D%E4%B8%8A).jpg?v=1726450287746"
-            data-text="蓮花說" position="356.55173 24.589 69.52121" scale="42.994 34.718 85.538"
-            rotation="0 180 0"></a-image>
+        <!--       <a-entity light="angle: 30; color: white; intensity: 0.1; penumbra: 0.05; type: spot" position="354.948 56.2556 24.249" rotation="-43.269 -179.8 179.684"></a-entity> -->
+
+        <a-plane width="2.2" height="2.2" color="white" position="356.55173 35 69.52121"
+            scale="42.994 34.718 85.538"></a-plane>
+        <a-plane width="2.4" height="2.4" color="black" position="356.55173 35 69.52121"
+            scale="42.994 34.718 85.538"></a-plane>
         <a-image class="clickable"
             src="https://cdn.glitch.global/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/3.%E7%A6%AA%E5%AE%9A%E8%93%AE%E9%96%8B-110x80-%E5%B7%B2%E8%92%99%E6%94%B6%E8%97%8F.jpg?v=1726450285460"
-            data-text="禪定蓮開" position="297.65061 24.589 69.5" scale="42.99423 34.718 85.538"
-            rotation="0 180 0"></a-image>
+            data-text="<h3>禪定蓮開<br>Zen Lotus Blooming</h3>
+                   <h5>畫家：李欽泓｜尺寸: 110x80 cm｜材質：水彩｜系列：蓮花寫生｜非賣品.可標售</h5>
+                   畫家以中國書法強而有力的筆觸，一筆豪氣地勾勒出饒富禪味與修行意境的線條。畫作傳達出修行人的境界——在生活中，無論處於順境或逆境，動或靜、閒或忙，只要能清楚覺知，看破真理與真相，便能不被外在事物所影響，心中自然綻放出一朵出污泥而不染的蓮花。<br><br>
+                   With powerful brushstrokes reminiscent of Chinese calligraphy, 
+                   the artist boldly outlines lines imbued with Zen and the essence of self-cultivation.
+                   The painting captures the state of mind of a self-cultivation practitioner—whether in favorable or adverse circumstances, 
+                   in motion or stillness, in leisure or busyness, one perceives truth and reality clearly, remaining unaffected by external matters. 
+                   As a result, a lotus flower blooms naturally in the heart, unsullied by the mud from which it grows."
+            position="356.55173 35 69.52121" scale="42.994 34.718 85.538" rotation="0 180 0"></a-image>
+
+        <a-entity light="angle: 30; color: white; intensity: 0.1; penumbra: 0.3; type: spot"
+            position="327.45132 100 17.42011" rotation="-45 -180 180"></a-entity>
+
         <a-image class="clickable"
-            src="https://cdn.glitch.global/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/2.%E4%BA%BA%E9%96%93%E4%BB%99%E5%A2%83-400x110.jpg?v=1726450283479"
-            data-text="人間仙境" position="198.7633 24.589 69.5" scale="100.13349 35.85091 85.538"
-            rotation="0 180 0"></a-image>
+            src="https://cdn.glitch.global/ba56c683-5346-427c-808f-ae739c6c4927/jpeg-optimizer_3.%E5%AE%87%E5%AE%99%E4%B9%8B%E8%93%AE(%E7%AC%AC2%E8%99%9F)-152x102.jpg?v=1732394041448"
+            data-text="<h3>宇宙之蓮 (第2號)<br>The Lotus Flower of the Universe (No. 2) </h3>
+                   <h5>畫家：李欽泓｜編號: L20240620-01-152x102｜尺寸: 152x102 cm｜材質：水彩｜系列：蓮花寫生｜非賣品.可標售</h5>
+                  濃墨蘸筆，懸空畫作，滴答落下「屋漏痕」的自然斑點痕跡。
+                  小自電子、質子、中子，大至月亮、地球、銀河系…宇宙間相互牽引，盡皆環繞「氣韻生動」的蓮花心湖。展現中國水墨畫的至高境界！<br><br>
+                  With a brush dipped in thick ink hovering above the canvas, natural specks form as the ink drips down like &quotmarks of a leaking roof.&quot 
+                  From the smallest particles—electrons, protons, and neutrons—to the moon, Earth, and galaxies, everything is interconnected, 
+                   revolving around the vivid lake of the lotus flower—a lake of pure heart, brimming with energy and fragrance.
+                   This artwork embodies the highest essence of Chinese ink painting!" position="297.65061 35 69.5"
+            scale="42.99423 34.718 85.538" rotation="0 180 0"></a-image>
+
+        <a-entity light="angle: 30; color: white; intensity: 0.1; penumbra: 0.5; type: spot"
+            position="199.97591 100 17.42" rotation="-45 -180 180"></a-entity>
         <a-image class="clickable"
-            src="https://cdn.glitch.global/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/lifu_%E5%B7%A63.png?v=1726450088316"
-            data-text="蓮花寫生" position="95.285 23.856 69.5" scale="84.48255 44.05842 85.538"
+            src="https://cdn.glitch.global/ba56c683-5346-427c-808f-ae739c6c4927/jpeg-optimizer_2.%E6%B4%AA%E8%8D%92%E4%B9%8B%E5%A7%8B-320x110.jpg?v=1732394025467"
+            data-text="<h3>洪荒之始<br>The Beginning of Time</h3>
+                   <h5>畫家:李欽泓｜編號: L20240813-08-320x110｜尺寸: 320x110 cm｜材質：水彩｜系列：蓮花寫生｜非賣品.可標售</h5>
+                  東方哲學思想貫穿當代藝術精髓！<br>
+                  色墨與留白、桃紅與翠綠……東方陰陽的用色交織行動繪畫的前衛衝擊，彷彿聽見「砰磞、砰磞」的巨響，如盤古開天闢地的磅礡力道與能量，縱橫古今，超越時空，至今仍在畫中流動不息。
+                  這是一幅具時間感、空間感、力度感、律動感與聲音感的絕對藝術創作。<br><br>
+                  Eastern philosophy permeates the essence of contemporary art! The interplay of ink and blank space, peach pink and emerald green . . . The colors of Eastern yin and yang collide with the avant-garde energy of action painting, as if one can hear the thunderous “Boom! Boom! Boom!” of Pangu, the primitive giant in Eastern mythology, separating the Sky and the Earth. This powerful fusion bridges the ancient and modern, transcending time and space, as the energy continues to flow endlessly within the artwork.
+                  This is a truly remarkable artistic creation, filled with a profound sense of time, space, energy, rhythm, and sound."
+            position="210 35 69.5" scale="100.13349 35.85091 85.538" rotation="0 180 0"></a-image>
+
+        <a-entity light="angle: 30; color: white; intensity: 0.1; penumbra: 0.3; type: spot"
+            position="95.85798 100 17.42011" rotation="-45 -180 180"></a-entity>
+        <a-image class="clickable"
+            src="https://cdn.glitch.global/3522d8d1-2d5c-46f9-abb4-965ea7834ded/%E7%9C%8B%E6%9D%BF%E6%96%87%E5%AD%971213_%E6%9D%8E%E6%AC%BD%E6%B3%938.png?v=1734087897978"
+            data-text="<h3>蓮花寫生系列<br>Lotus Sketch Series</h3><br>
+                   李欽泓結合東方水墨、透明水彩和書法筆觸，創作了比莫內「睡蓮-池中之雲」更長幅的蓮花寫生作品，被評論家形容為「英雄式掛毯」
+                   。香港藝評人李華川稱：「畫魔出現了！」李欽泓的蓮花寫生堪比世界級美術館的珍藏之作。 
+                   他使用水瓢、拖把與畫筆凌空作畫，利用近5000張Arches紙材，歷時十個月，描繪蓮花四季變化，展示了「爆破寫生」技法、「玉質化」色彩和國畫的留白藝術。2014年，為侍奉母親而停筆十年的李欽泓重新拾筆，每天清晨五點到蓮花池寫生捕捉最美瞬間。 作畫前，他會靜心打坐，結合內心修為、文化內涵、詩意和筆韻節奏，繪製出一系列精湛的蓮花作品，饒富禪意與修行人的思維。<br><br>
+                   Chinhung Lee masterfully blended Eastern ink painting,
+                  transparent watercolor, and calligraphic strokes to create lotus
+                  sketches even longer than Monet's  &amp;quotReflections of Clouds on the
+                  Water-Lily Pond. &amp;quotCritics have hailed these works as  &amp;quotheroic
+                  tapestries, &amp;quotwith Hong Kong art critic Li Hua-Chuan calling him a
+                   &amp;quotpainting wizard.&quot; Lee's lotus sketches are deemed worthy of
+                  display in the world's top art museums.
+                  Using water scoops, mops, and brushes, Lee painted in the
+                  air, using nearly 5,000 sheets of Arches paper over ten months
+                  to depict the seasonal changes of lotus flowers. This series
+                  showcased his  &amp;quotexplosive sketching&quot; technique, jade-like colors,
+                  and the reserved white space characteristic of traditional
+                  Chinese painting.
+                  In 2014, after a ten-year hiatus to care for his mother, Lee
+                  resumed his artistic journey. Each morning at five o'clock, he
+                  sketched at the lotus pond to capture its most beautiful
+                  moments. Before painting, he would meditate to quiet his mind,
+                  blending inner cultivation, cultural richness, poetic expression,
+                  and rhythmic brush strokes to create a series of exquisite lotus
+                  paintings, rich in Zen and the contemplative thoughts of a self-
+                  cultivation practitioner." position="105 35 69.5" scale="98.94632 44.058 85.538"
             rotation="0 180 0"></a-image>
-        <a-image src="https://cdn.glitch.global/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/lifu_poster.png?v=1726449594963"
-            data-text="蓮花系列" position="45.5016 24.35145 112.07609" scale="84.10689 47.63924 72.14658"
-            rotation="0 -90 0"></a-image>
+        <!--       <a-image
+        src="https://cdn.glitch.global/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/lifu_poster.png?v=1726449594963"
+        data-text="蓮花系列"
+        position="45.5016 24.35145 112.07609"
+        scale="84.10689 47.63924 72.14658"
+        rotation="0 -90 0"
+      ></a-image> -->
+
+        <!--       <a-entity light="angle: 30; color: white; intensity: 0.1; penumbra: 0.3; type: spot" position="18.00443 100 114.6503" rotation="-45 90 180"></a-entity> -->
+
+        <a-entity light="angle: 30; color: white; intensity: 0.1; penumbra: 0.3; type: spot"
+            position="-1.16303 100 92.91136" rotation="-45 180 180"></a-entity>
         <a-image src="https://cdn.glitch.global/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/LifuArtLogo.png?v=1726449110326"
-            data-text="Lifu Art" position="-46.37562 26.547 110.70261" scale="60.267 49.598 75.113"
-            rotation="0 90 0"></a-image>
+            data-text="Lifu Art" position="-2.15663 35 157.0159" scale="60.267 49.598 75.113"
+            rotation="0 180 0"></a-image>
+
+        <a-entity light="angle: 30; color: white; intensity: 0.1; penumbra: 0.3; type: spot"
+            position="-113.68187 100 12.16921" rotation="-45 180 180"></a-entity>
         <a-image class="clickable"
             src="https://cdn.glitch.me/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/6.L2024031801-220X80(%E6%94%9D%E5%BD%B1%E5%B8%AB%E9%87%8D%E6%8B%8D).jpg?v=1726448160483"
-            data-text="霹靂圖騰" position="-95.21434 25 69.5" scale="81.331 28.073 54.401" rotation="0 180 0"></a-image>
+            data-text="<h3>霹靂圖騰<br>Thunderbolt Totem</h3>
+                   <h5>畫家：李欽泓｜編號: L2024031801-220x80｜尺寸: 220x80 cm｜材質：水彩</h5>
+                   這幅前衛藝術作品描繪了「大爆炸」後宇宙生成與生命誕生的意象，洋溢著幸福感。
+                   畫中紅色線條隱隱相連，象徵著緣分，隨時間流逝，生命個體因七情六慾，逐漸忘記了本源。
+                   畫家反思「人從何而來，又將往何處去？」將自己修行過程比喻為《西遊記》中孫悟空的旅程，經無數挫折後找到生命歸原之道。
+                   作品由四張對開畫紙組成，最右邊一張左下角有一道粗獷黑藍色的縱線，象徵孫悟空戰至宇宙邊際，留下「到此一遊」印記，因此名為「霹靂圖騰」。
+                   <br><br>
+                   This avant-garde artwork captures the imagery of the universe's formation and the birth of life
+                   after the “Big Bang,” radiating a warm and joyous feeling. The connected red lines symbolize
+                   fate, yet as time passes, individuals gradually forget their origin due to emotions and desires.
+                   The artist contemplates the questions, “Where did we come from, and where are we going?” He
+                   metaphorically compares his spiritual journey to that of the Monkey King from the Eastern
+                   mythological novel “Journey to the West.” Like the Monkey King, who endured countless
+                   setbacks and trials before finding the way back to the origin of life, the artist reflects on his own
+                   path. This painting consists of four panels. In the lower left corner of the far right panel, a thick black
+                   vertical line symbolizes the Monkey King's journey to the edge of the universe, leaving a mark of
+                   “been here.” Thus, the painting is titled “Thunderbolt Totem.”" position="-95.21434 35 69.5"
+            scale="81.331 28.073 54.401" rotation="0 180 0"></a-image>
+
         <a-image class="clickable"
             src="https://cdn.glitch.global/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/5.L20240620-02-88x120.jpg?v=1726448139642"
-            data-text="修行之門" position="-157.08565 25 69.5" scale="25.16 32.104 41.223" rotation="0 180 0"></a-image>
+            data-text="<h3>修行之門<br>The Gate of Self-Cultivation</h3>
+                   <h5>畫家：李欽泓｜編號: L20240620-02-88x120｜尺寸：88x120 cm｜材質：壓克力彩</h5>
+                   這幅畫作是李欽泓的《霹靂圖騰》系列中的一幅抽象傑作，探索了修行的境界及意義。
+                   畫中白色的壓克力彩彷彿是一扇修行之門，門內的世界由桃紅、橙色、紅色和黑色構成，充滿了精彩和奧妙。
+                   畫家以象徵性的黑色筆觸，記錄了他從門外混沌世界走入門內精彩世界的過程，這些筆觸如同他到此一遊的圖騰印記。
+                   畫作予人衝擊的感受，但是每個筆觸和色彩都互相平衡，並展示了豐富的層次和深邃的內涵，是一件值得細細品味和探索的藝術珍品。
+                   <br><br>
+                   This painting is an abstract masterpiece from Chinhung Lee's ”Thunderbolt Totem” series, 
+                   delving into the realm and significance of self-cultivation. White acrylic paint forms a gateway to self-cultivation.
+                   Within this gate, vibrant hues of pink, orange, red, and black create a world full of wonder and mystery.
+                   The artist uses symbolic black brushstrokes to chronicle his journey from the chaotic world outside
+                   to the splendid world within, with these strokes serving as totemic marks of his passage.
+                   The painting delivers a powerful impact, yet every stroke and color harmonizes, displaying rich layers
+                   and profound depth. This piece is an artistic treasure worthy of careful appreciation and exploration."
+            position="-157.08565 35 69.5" scale="25.16 32.104 41.223" rotation="0 180 0"></a-image>
+
         <a-image class="clickable"
-            src="https://cdn.glitch.global/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/lifu_%E5%8F%B33-2.png?v=1726447239369"
-            data-text="霹靂繪畫" position="-203.56914 23.856 69.5" scale="62.814 54.053 85.538"
-            rotation="0 180 0"></a-image>
+            src="https://cdn.glitch.global/3522d8d1-2d5c-46f9-abb4-965ea7834ded/%E7%9C%8B%E6%9D%BF%E6%96%87%E5%AD%971213_%E6%9D%8E%E6%AC%BD%E6%B3%937.png?v=1734087518127"
+            data-text="<h3>「霹靂繪畫」系列<br>“THE THUNDERBOLT PAINTING” SERIES</h3>
+                   李欽泓一直通過繪畫追尋永恆，探索宇宙的奧秘和生命的意義，思考人類從何而來，又將往何處去。
+                   偶然間，他讀到《霍金傳》及《時間簡史》等科普書籍，了解到科學家如何探索宇宙。
+                   有一派理論主張宇宙經由一場大爆炸（Big Bang）而誕生，這與東方易經所云的「一氣生萬物」不謀而合。
+                   大爆炸（Big Bang）在中文美化翻譯為「大霹靂」，啟發了李欽泓創作「霹靂繪畫」系列，探索宇宙的起源，追尋生命回歸的本源。
+                  <br><br>
+                   Chinhung Lee dedicated his artistic life to the pursuit of eternity, 
+                   employing his brushstrokes to unravel the mysteries of the universe, 
+                   pondering where humanity comes from and where it is heading.
+                   A chance encounter with popular science books such as “Stephen Hawking's Universe” and ”A Brief History of Time” sparked a profound shift in Chinhung’s artistic perspective. 
+                   He became captivated by the scientific approach to understanding the universe, 
+                   particularly the concept of the Big Bang, which coincides with the Eastern philosophical concept of ”a single source of energy giving birth to all things,” 
+                   as described in the I Ching (Book of Changes).
+                   Therefore, Chinhung named the Big Bang as the ”Great Thunderbolt,” 
+                   initiating ”The Thunderbolt Painting” series to explore the mysteries of cosmic origins and the essence of life itself."
+            position="-203.56914 35 69.5" scale="62.814 54.053 85.538" rotation="0 180 0"></a-image>
+
+        <a-entity light="angle: 30; color: white; intensity: 0.1; penumbra: 0.3; type: spot"
+            position="-292.29976 100 15.09847" rotation="-45 180 180"></a-entity>
         <a-image class="clickable"
             src="https://cdn.glitch.global/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/3.L2024031539-54x39.jpg?v=1726447830837"
-            data-text="萬物隨心" position="-258.08647 25 69.5" scale="33.8288 22.47756 46.06738"
-            rotation="0 180 0"></a-image>
+            data-text="<h3>萬物隨心<br>All Things Follow the Heart</h3>
+                   <h5>畫家：李欽泓｜編號: L2024031539-54x39｜尺寸: 54x39 cm｜材質：水彩</h5>
+                   畫家獨樹一格的「爆破寫生」已達到信手捻來皆可創作的境界。
+                   他在天地之間萃取他要的景物來入畫，再將景物乾坤挪移，宛如空間的魔法師。
+                   透過抽象語意展現出畫家眼中最完美的意境，讓人感受到比實景更加美麗的自然景致，正如清朝鄭板橋書畫家所云:「畫到情神飄沒處，更無真相有真魂」！
+                   <br><br>
+                   The artist’s unique ‘explosion sketching’ technique has reached a realm where he can create masterpieces with effortless spontaneity. 
+                   He extracts the scenery he desires from the vastness of nature and incorporates it into his paintings, 
+                   rearranging and transforming it like a spatial magician, creating a sense of beauty in the composition. 
+                   While this is an abstract painting, it allows the viewer to perceive the painting's essence, 
+                   much like the Qing Dynasty calligrapher and painter Banqiao Zheng once said: &quotWhen the painting reaches a state where the spirit and soul are no longer bound, 
+                   there is no longer a true image but a true spirit!&quot" position="-258.08647 35 69.5"
+            scale="33.8288 22.47756 46.06738" rotation="0 180 0"></a-image>
         <a-image class="clickable"
             src="https://cdn.glitch.global/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/2.L2024031538-54x39-SOLD.jpg?v=1726447637339"
-            data-text="色彩舞故鄉" position="-305.40428 25 69.5" scale="33.8288 22.47756 46.06738"
-            rotation="0 180 0"></a-image>
+            data-text="<h3>色彩舞故鄉<br>Colors Dancing in Hometown</h3>
+                   <h5>畫家：李欽泓｜編號: L2024031538-54x39｜尺寸: 54x39 cm｜材質：水彩｜已蒙收藏</h5>
+                   畫家運用「爆破寫生」的色塊及粗獷的筆觸，勾勒出故鄉的抽象景緻，使畫作充滿動感與想像空間。
+                   其獨特的「玉質化」色彩技法更使畫作的每個細節顯得美不勝收，讓賞畫者沉浸其中，忘卻煩囂。
+                   <br><br>
+                   With bold color blocks and vigorous brushstrokes, 
+                   the artist employs the &quotExplosion Sketching&quot technique to depict an abstract landscape of his hometown, 
+                   imbuing the artwork with a sense of dynamism and imaginative space. 
+                   His unique &quotjade-like&quot color technique further enhances the beauty of every detail, 
+                   inviting viewers to immerse themselves in the painting and forget the hustle and bustle of the outside world."
+            position="-305.40428 35 69.5" scale="33.8288 22.47756 46.06738" rotation="0 180 0"></a-image>
+
         <a-image class="clickable"
-            src="https://cdn.glitch.global/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/lifu_%E5%8F%B33-1.png?v=1726447237910"
-            data-text="爆破寫生" position="-358.21555 25 69.5" scale="62.81364 49.48278 85.53837"
-            rotation="0 180 0"></a-image>
+            src="https://cdn.glitch.global/3522d8d1-2d5c-46f9-abb4-965ea7834ded/%E7%9C%8B%E6%9D%BF%E6%96%87%E5%AD%971213_%E6%9D%8E%E6%AC%BD%E6%B3%936.png?v=1734087350811"
+            data-text="<h3>爆破寫生 全球第一人<br>Explosive Sketching: The World's First</h3>
+                   畫作是畫家的身份證，每位名留青史的畫家都有獨特的創意！「爆破寫生」是李欽泓獨創的技法。
+                   在他眼中，每個景物都是靈感來源。當風景映入眼簾，觸動瞬間，他立即將顏料凌空投擲到畫紙上，創作便開始。
+                   顏料透過爆破在紙上產生能量，再以噴水或灑水的方式，使顏料順著水流自然形成基本構圖。
+                   他是玩顏料和玩水的專家，每次創作都配合當時溫度和濕度，與大自然共同即席創作。
+                   基本構圖成形後，他用書法筆觸快速勾勒景物輪廓，將顏料、畫筆、畫紙與意念結合，呈現出最完美的「心象合一」抽象作品。
+                  <br><br>
+                   A painting is a painter's identification card; every artist
+                  remembered in history has a unique creative approach.
+                  &amp;quotExplosive Sketching&quot; is Chinhung Lee's signature technique. For
+                  him, every scene is a wellspring of inspiration. When a landscape
+                  catches his eye and sparks a moment of inspiration, he
+                  immediately throws paint into the air and onto the paper,
+                  initiating the creative process. The paint, propelled by the
+                  explosion, generates energy on the paper. Then, using sprays or
+                  splashes of water, the paint naturally forms a basic composition
+                  as it flows.
+                  Chinhung Lee is adept at manipulating both paint and water,
+                  adjusting each creation to the current temperature and humidity,
+                  thus co-creating spontaneously with nature. After the basic
+                  composition takes shape, he quickly outlines the scene with
+                  calligraphic strokes, blending paint, brush, paper, and intent to
+                  present the most perfect &amp;quotunity of mind and image&quot; in his
+                  abstract works." position="-358.216 35 69.5" scale="62.814 55 85.538" rotation="0 180 0"></a-image>
+
+        <a-entity light="angle: 30; color: white; intensity: 0.1; penumbra: 0.3; type: spot"
+            position="-317.65109 100 -3.84785" rotation="-45 90 180"></a-entity>
+
+        <a-image
+            src="https://cdn.glitch.global/3522d8d1-2d5c-46f9-abb4-965ea7834ded/%E7%9C%8B%E6%9D%BF%E6%96%87%E5%AD%971213_%E6%9D%8E%E6%AC%BD%E6%B3%934.png?v=1734087050385"
+            position="-398.161 51.27442 27.489" scale="46.15512 7.62947 -15.972" rotation="0 90 0"></a-image>
         <a-image class="clickable"
             src="https://cdn.glitch.global/eb7d671d-a706-4b46-a49a-560ff977c9bb/%E6%88%AA%E5%9C%96%202024-09-20%2015.47.13.png?v=1726818510835"
             data-video-src="https://cdn.glitch.me/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/Jade-like%20colors-Chinese_V2.mp4?v=1726418855702"
-            data-text="李談玉質化色彩影片" position="-398.16061 25.119 27.489" scale="45.107 29.972 61.426"
+            data-text="李欽泓談玉質化色彩" position="-398.16061 29.6294 27.489" scale="45.107 29.972 61.426"
             rotation="0 90 0"></a-image>
-        <!--       <a-video
-        class="clickable"
-        autoplay="false"
-        loop
-        id="Video"
-        src="https://cdn.glitch.me/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/Jade-like%20colors-Chinese_V2.mp4?v=1726418855702"
-        data-text="李談玉質化色彩"
-        position="-398.16061 25.119 27.489"
-        scale="45.107 29.972 61.426"
-        rotation="0 90 0"
-      ></a-video>  -->
 
-        <!-- 添加按钮来播放影片 -->
-        <!--       <a-entity id="playButton" geometry="primitive: plane; height: 0.5; width: 1"
-                material="color: green" position="-448.96472 26 27.4889" text="value: Play Video; color: white"
-                onclick="playVideo()"></a-entity>  -->
         <a-image class="clickable"
-            src="https://cdn.glitch.global/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/lifu_%E5%8F%B32.png?v=1726418086491"
-            data-text="玉質化色彩" position="-398.16061 25 -26.181" scale="54.632 47.77215 -15.972"
-            rotation="0 90 0"></a-image>
+            src="https://cdn.glitch.global/3522d8d1-2d5c-46f9-abb4-965ea7834ded/%E7%9C%8B%E6%9D%BF%E6%96%87%E5%AD%971213_%E6%9D%8E%E6%AC%BD%E6%B3%935.png?v=1734087084160"
+            data-text="<h3>畫裡的玉石光彩-玉質化色彩<br>The Jade-like Radiance in Paintings</h3>
+                   在華人社會，玉器象徵品德，隨佩戴越久越顯美麗，如同「溫、良、恭、儉、讓」的美德。
+                   這是李欽泓追求的「美」。他鑽研如何將玉石的溫潤色彩與光澤呈現在畫作上，稱之為「玉質化色彩」。
+                   李欽泓運用水彩的暈染和水洗技巧，展現玉石的晶瑩剔透與層次美感；
+                   在油畫和壓克力中，如同切琢雕磨，層層疊加出陶瓷的釉彩色彩。他運用「全光譜」色彩，使層次豐富，並善用「剔白法」使色澤溫潤有質感。色彩交織，豐富精彩。
+                   在李欽泓的畫作中，處處可見玉質化色彩，捕捉大自然千變萬化的色彩，是色彩探索的最高境界，絶美的視覺盛宴。
+                    <br><br>
+                   In Chinese culture, jade symbolizes virtue, growing more
+                  beautiful with time and embodying qualities such as gentleness,
+                  kindness, respect, frugality, and modesty. This is the essence of
+                  the &quotbeauty&quot that Chinhung Lee strives to capture. He has
+                  dedicated himself to mastering the presentation of jade's warm
+                  colors and luster in his paintings, a technique he refers to as
+                  &quotjade-like colors.&quot
+                  Chinhung Lee employs watercolor's blending and wash
+                  techniques to reveal the translucence and layered beauty of
+                  jade. In his oil and acrylic works, he crafts layers of color
+                  reminiscent of ceramic glazes, akin to the processes of carving
+                  and polishing. He utilizes the full spectrum of colors to achieve
+                  rich layers and employs the &quotpolishing paint technique&quot to give
+                  the colors a warm and textured feel. The interplay of these
+                  hues creates a rich and vibrant effect.
+
+                  In Chinhung Lee's artworks, jade-like colors are omnipresent,
+                  capturing the ever-changing hues of nature. This represents the
+                  pinnacle of color exploration, offering viewers a stunning visual
+                  feast." position="-398.16061 35 -26.181" scale="54.632 47.77215 -15.972" rotation="0 90 0"></a-image>
+
+        <a-entity light="angle: 30; color: white; intensity: 0.1; penumbra: 0.3; type: spot" position="-313 100 -20.759"
+            rotation="-45 0 180"></a-entity>
         <a-image class="clickable"
             src="https://cdn.glitch.global/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/5.L2024031534-54x39-%E5%B7%B2%E8%92%99%E6%94%B6%E8%97%8F.jpg?v=1726417024348"
-            data-text="朝氣蓬勃" position="-312.79465 25 -69" scale="33.8288 22.47756 46.06738" rotation=""></a-image>
+            data-text="<h3>朝氣蓬勃<br>Bursting with Vitality</h3>
+                   <h5>畫家：李欽泓｜編號: L2024031534-54x39｜尺寸: 54x39 cm｜材質：水彩｜已蒙收藏</h5>
+                   畫家運用「玉質化」的色彩呈現天空之美，並且以厚實不透明水彩的技法，加上力透紙背的強勁筆觸，精湛描繪出地面景物充滿朝氣蓬勃的樣貌。這樣獨特的繪畫風格，
+                   展現了反差卻又和諧的美感，讓人一看就不小心掉進畫中，沈浸在充滿希望與幸福感的世界裡。
+                   <br><br>
+                   The artist masterfully employs &quotjade-like&quot colors to capture the celestial splendor, 
+                   while the earthly scenery is rendered in a thick, opaque watercolor technique, 
+                   infused with powerful brushstrokes that pierce the paper. 
+                   This unique painting style presents a captivating contrast, 
+                   where vibrant hues blend harmoniously, 
+                   inviting the viewer to step into the artwork and immerse themselves in a world brimming with hope and happiness."
+            position="-332 35 -69" scale="33.8288 22.47756 46.06738" rotation=""></a-image>
         <a-image class="clickable"
             src="https://cdn.glitch.global/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/4.L2024031522-54x39-%E5%B7%B2%E8%92%99%E6%94%B6%E8%97%8F.jpg?v=1726416911702"
-            data-text="故鄉" position="-262.05436 25 -69" scale="33.8288 22.47756 46.06738" rotation=""></a-image>
+            data-text="<h3>故鄉<br>Hometown</h3>
+                   <h5>畫家：李欽泓｜編號: L2024031522-54x39｜尺寸: 54x39 cm｜材質：水彩｜已蒙收藏</h5>
+                   這幅畫是畫家的故鄉。畫家不斷突破畫風，以不透明水彩的技法以及充滿勁道的筆觸，繪畫出油畫般的色彩效果。畫家李焜培曾形容李欽泓的筆觸猶如一位世界級的拳擊手，不斷揮灑，直至筋疲力竭為止。而這正也是李欽泓畫作的每個細節均能讓人感受到生意盎然的原因。
+                  <br><br>
+                   This painting depicts the artist's hometown. In a continuous exploration of his artistic style, the artist employs opaque watercolor techniques and forceful brushstrokes, achieving an oil painting-like color effect. 
+                  Painter Kunpei Lee once described Chinhung’s brushstrokes as those of a world-class boxer, constantly striking until exhaustion. This is precisely why every detail in Chinhung’s paintings exudes vitality.
+                  " position="-282 35 -69" scale="33.8288 22.47756 46.06738" rotation=""></a-image>
+
+        <a-entity light="angle: 30; color: white; intensity: 0.1; penumbra: 0.3; type: spot" position="-208 100 -20.759"
+            rotation="-45 0 180"></a-entity>
         <a-image class="clickable"
             src="https://cdn.glitch.global/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/3.L2024031535-54x39.jpg?v=1726416816295"
-            data-text="祥雲瑞氣" position="-210.62147 25 -69" scale="33.8288 22.47756 46.06738" rotation=""></a-image>
+            data-text="<h3>祥雲瑞氣<br>Auspicious Clouds and Mists</h3>
+                   <h5>畫家：李欽泓｜編號: L2024031535-54x39｜尺寸: 54x39 cm｜材質：水彩</h5>
+                   畫家運用「玉質化」技法將雲彩之美展現得淋漓盡致，同時以不透明水彩繪出地上景物的生命力，使畫作美的極致，處處令人驚艷！讓人隱隱約約感受到「紫氣東來，祥瑞降臨，萬物甦醒，欣欣向榮」的吉祥徵兆。
+                   <br><br>
+                   The artist's masterful application of the &quotjade-like&quot technique brings the ethereal beauty of the
+                  clouds to life, while the vibrant hues of opaque watercolor capture the vitality of the earthly
+                  scenery. The painting exudes an exquisite beauty, captivating the viewer with its splendor. One
+                  can almost perceive the auspicious signs of &quotpurple clouds rising in the east, heralding the
+                  arrival of good fortune, as all things awaken and flourish.&quot" position="-230 35 -69"
+            scale="33.8288 22.47756 46.06738" rotation=""></a-image>
         <a-image class="clickable"
             src="https://cdn.glitch.global/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/2.King_of_color-03-54X39-%E9%9D%9E%E8%B3%A3%E5%93%81.jpg?v=1726416668680"
-            data-text="晨曦初現" position="-160.79859 25 -69" scale="33.8288 22.47756 46.06738" rotation=""></a-image>
+            data-text="<h3>晨曦初現<br>Dawn's First Light</h3>
+                   <h5>畫家：李欽泓｜編號: King of Color-03-54x39｜尺寸: 54x39 cm｜材質：水彩｜非賣品</h5>
+                   此畫描繪了清晨時分的故鄉景色，畫家對色彩的掌握精湛，將遠、中、近景處理得層次分明。在晨曦初現時，遠處厚實如男人肩膀的山景於薄霧中若隱若現。中景以現代幾何圖形描繪鄉間的屋宇，近景則以鮮明色彩呈現隨風搖曳的花草和樹木的靈動生命力。畫中，鄉下人家煮早餐的裊裊炊煙與縈繞遠山的山嵐和晨曦的雲層交織在一起，展現出空靈的美感。使觀賞者彷彿置身於寧靜的晨曦之中，也能聞到清新空氣的味道，感覺十分享受、舒適，陶醉其中。這幅畫作也被收錄在拜倫評李欽泓為「色彩之王」的經典作品中。
+                   <br><br>
+                   This painting captures the dawn scenery of the artist's hometown, showcasing his exquisite
+                  command of color with distinct layers for the distant, middle, and foregrounds. As dawn breaks,
+                  the distant mountains, solid like a man's shoulders, emerge through the thin mist. The middle
+                  ground features rural houses depicted in modern geometric shapes, while the foreground
+                  bursts with vibrant colors, bringing to life the flowers and trees swaying in the wind. The curling
+                  smoke from rural homes cooking breakfast intertwines with the mountain mist and morning
+                  clouds, creating an ethereal beauty. Viewers feel immersed in the tranquility of dawn, able to
+                  smell the fresh air and feel deeply content and at ease. This painting is included in Byron's
+                  critique article. Later, Chinhung Lee was crowned the 'King of Color.'" position="-180 35 -69"
+            scale="33.8288 22.47756 46.06738" rotation=""></a-image>
         <a-image class="clickable"
             src="https://cdn.glitch.global/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/2.King_of_color-01-54X39-%E9%9D%9E%E8%B3%A3%E5%93%81.jpg?v=1726416222514"
-            data-text="夕陽之頌" position="-114.69014 25 -69" scale="33.8288 22.47756 46.06738" rotation=""></a-image>
+            data-text="<h3>夕陽之頌<br>Ode to the Sunset</h3><br>
+                   <h5>畫家：李欽泓｜編號: King of Color-01-54x39｜尺寸: 54x39 cm｜材質：水彩｜非賣品</h5>
+                  畫家用水彩描繪故鄉夕陽的絢爛色彩，作品展現了高超的技法，即使不用水洗技法，也能達到水洗的效果。顏料雖已乾，卻仍保有流動而濕潤的質感，展現如玉般溫潤的色澤。評論者拜倫曾說：這幅畫的色彩如同陶瓷的金黃色，連眾神也會對這等美學感到讚嘆。畫家對色彩的精妙掌握，使得景色比實景更加美麗，宛如蓬萊仙境。
+                  拜倫將李欽泓封為「色彩之王」，並選擇這幅畫作為評論的封面，因為這幅畫作說明了一切——它無與倫比！水彩顏料的限制已全然消失！這片遠方廣闊的水洗天空成為水彩畫作史上的記憶里程碑。
+                  <br>
+                  畫家用水彩描繪故鄉夕陽的絢爛色彩，作品展現了高超的技法，即使不用水洗技法，也能達到水洗的效果。顏料雖已乾，卻仍保有流動而濕潤的質感，展現如玉般溫潤的色澤。評論者拜倫曾說：這幅畫的色彩如同陶瓷的金黃色，連眾神也會對這等美學感到讚嘆。畫家對色彩的精妙掌握，使得景色比實景更加美麗，宛如蓬萊仙境。
+                  拜倫將李欽泓封為「色彩之王」，並選擇這幅畫作為評論的封面，因為這幅畫作說明了一切——它無與倫比！水彩顏料的限制已全然消失！這片遠方廣闊的水洗天空成為水彩畫作史上的記憶里程碑。
+                  <br><br>
+                  The artist masterfully uses watercolors to capture the splendid colors of his hometown's sunset,
+                  showcasing exceptional technique. Without employing traditional wash methods, he achieves a
+                  wash-like effect. The dried pigments retain a flowing, moist quality, with hues that evoke the
+                  warmth and smoothness of jade. The artist's skillful use of color transforms the scenery into
+                  something more beautiful than reality, resembling a paradise.
+                  Byron crowned Chinhung Lee the &quot King of Color&quot and selected this painting as the cover for his
+                  critique. He remarked, &quotThe cover painting says everything. This big sky! The limitation of water
+                  based has disappeared from my eyes! It serves instead like no other.&quot" position="-134 35 -69"
+            scale="33.8288 22.47756 46.06738" rotation=""></a-image>
+
+        <a-entity light="angle: 30; color: white; intensity: 0.1; penumbra: 0.3; type: spot"
+            position="-113 100 -20.75886" rotation="-45 0 180"></a-entity>
+
         <a-image class="clickable"
-            src="https://cdn.glitch.global/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/lifu_%E5%8F%B31.png?v=1726224863622"
-            data-text="色彩之王的崛起" position="-72.10552 25 -69" scale="44.961 41.18735 75.113" rotation=""></a-image>
+            src="https://cdn.glitch.global/3522d8d1-2d5c-46f9-abb4-965ea7834ded/%E7%9C%8B%E6%9D%BF%E6%96%87%E5%AD%971213_%E6%9D%8E%E6%AC%BD%E6%B3%933.png?v=1734087014622"
+            data-text="<h3>色彩之王的崛起 李欽泓的藝術傳奇<br>The Rise of the King of Color:
+        The Artistic Legend of Chinhung Lee</h3>
+        李欽泓一生致力於追求宇宙中最美麗的色彩，尤其對西方印象派的經典色彩情有獨鍾。他深入研究並吸取莫內和波納爾的色彩精華，同時鑽研東方玉器和陶瓷的色澤之美，將各種材質的顏料運用在畫布上，創作出如「玉」般溫潤且層次豐富的色彩，令人驚艷。
+        然而，他的才華一度被埋沒在文化沙漠中。家人無法理解他的藝術痴迷，將他送進瘋人院…
+        李欽泓忍辱負重，走過了一段傳奇的繪畫人生，直到國際評論家拜倫·蒙哥馬利透過臉書找到他，說：「你知道你是一位偉大的水彩畫家嗎？」經過一連串畫作評比，拜倫將他封為繪畫界的「男爵」，並冠以「色彩之王」的頭銜，這才讓李欽泓揚眉吐氣，獲得國際肯定。
+        <br><br>           
+        Chinhung Lee has dedicated his life to capturing the most
+        beautiful colors in the universe, with a particular fondness for
+        the classic hues of Western Impressionism. He has deeply
+        studied and absorbed the color techniques of Claude Monet
+        and Pierre Bonnard, while also exploring the vibrant colors
+        found in Eastern jade and ceramics. By applying pigments from
+        various materials onto canvas, he has created stunningly rich
+        and layered colors that evoke the warmth and depth of jade.
+        However, his talent was once buried in a cultural desert.
+        Misunderstanding his obsession with art, his family sent him to
+        an asylum. Despite enduring humiliation and hardship,
+        Chinhung Lee persevered on his legendary artistic journey.
+        His breakthrough came when international art critic Byron
+        Montgomery discovered him on Facebook and remarked, &quotYou
+        are a great Watercolorist, did you know that?&quot After a series of
+        artwork evaluations, Byron dubbed him the &quotBaron&quot of the art
+        world and awarded him the title &quotKing of Color.&quot This
+        recognition finally allowed Chinhung Lee to gain international
+        acclaim and respect." position="-82 35 -69" scale="44.961 41.18735 75.113" rotation=""></a-image>
         <a-image class="clickable"
-            src="https://cdn.glitch.global/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/lifu_%E6%9D%8E%E6%AC%BD%E6%B3%93-w.png?v=1726216894240"
-            data-text="二度獲邀威尼斯" position="-46.48695 22 -136.89328" scale="39.6219 21.822 75.113" rotation="0 90 0">
+            src="https://cdn.glitch.global/3522d8d1-2d5c-46f9-abb4-965ea7834ded/%E7%9C%8B%E6%9D%BF%E6%96%87%E5%AD%971213_%E6%9D%8E%E6%AC%BD%E6%B3%932.png?v=1734086936125"
+            data-text="李欽泓（Chinhung Lee），1963年生於台灣苗栗，受學院薫陶，擅長水墨及水彩，尤以水彩繪畫卓越。其畫作以如玉石般溫潤的「玉質化色彩」及獨特技法「爆破寫生」聞名，被譽為「色彩之王」。他曾獲邀參加威尼斯雙年展邀請展（與新墨派一起），榮任合鄉美術館永久駐館藝術家，並挑戰世界最長的蓮花寫生畫作。他經常將易經、老莊哲學融入作品中，讓人們在欣賞畫作時猶如展開一場心靈饗宴。<br>
+        <br> Chinhung Lee, born in 1963 in Miaoli, Taiwan, is a master of
+        ink and watercolor painting, particularly known for his
+        exceptional skill in watercolor. His works are celebrated for
+        their distinctive &quot;jade-like colors&quot; and his unique &quot;explosive
+        sketching&quot; technique, which have earned him the title &quot;King of
+        Color.&quot; 
+        Twice Invited to Display at the Venice Biennale International Art Exhibition</h3>
+        <br>Lee has been invited to exhibit his work in the Venice
+        Biennale International Art Exhibition (alongside the works of
+        New Ink Doctrine) and has served as the permanent artist-in-
+        residence at the He Hsiang Art Museum. He has also taken on
+        the ambitious project of creating the world's longest lotus-
+        themed sketch. Lee often integrates the philosophies of the
+        Book of Changes (I Ching), Laozi, and Zhuangzi into his works,
+        offering viewers a profound spiritual experience as they
+        appreciate his art." position="-49 34.335 -135" scale="31.78569 28.52144 60.25739" rotation="0 90 0">
         </a-image>
+
+        <a-entity light="color: white; intensity: 0.1; penumbra: 0.1; type: spot" position="-28.01565 38.44534 -113.4"
+            rotation="-3.2400763314648056 90 179.78842653410103"></a-entity>
         <a-image class="clickable"
-            src="https://cdn.glitch.global/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/lifu_%E6%9D%8E%E6%AC%BD%E6%B3%93-p.png?v=1726171676110"
-            data-text="色彩之王 李欽泓" position="-46 22 -94.19697" scale="44.96146 21.82227 75.11279" rotation="0 90 0">
+            src="https://cdn.glitch.global/1a3d97e5-83d6-4817-8e63-dcd1fc601ede/%E7%9C%8B%E6%9D%BF%E6%96%87%E5%AD%971213_%E6%9D%8E%E6%AC%BD%E6%B3%931.png?v=1734086626841"
+            data-text="<h3>「色彩之王」李欽泓<br> 
+                   &quotKing of Color&quotChinhung Lee</h3>" position="-49 35 -94.19697"
+            scale="44.96146 21.82227 75.11279" rotation="0 90 0">
         </a-image>
+
+        <a-entity light="angle: 30; color: white; intensity: 0.1; penumbra: 0.3; type: spot"
+            position="-1.16303 100 -100.30149" rotation="-45 0 180"></a-entity>
+
+        <a-image src="https://cdn.glitch.global/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/LifuArtLogo.png?v=1726449110326"
+            data-text="Lifu Art" position="-2.157 35 -158.64301" scale="60.267 49.598 75.113" rotation=""></a-image>
+
+        <a-entity light="color: white; intensity: 0.1; penumbra: 0.1; type: spot" position="24.46611 38.44534 -113.4"
+            rotation="-3.2400763314648056 -90.05807919645792 179.78842653410103"></a-entity>
+
         <a-image class="clickable"
-            src="https://cdn.glitch.global/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/lifu_%E7%9B%A7%E5%B4%87%E9%81%93-p.png?v=1726217102967"
-            data-text="盧崇道" position="46.52424 23 -130.78302" scale="45.89102 25.27469 86.99743" rotation="0 -90 0">
+            src="https://cdn.glitch.global/3522d8d1-2d5c-46f9-abb4-965ea7834ded/%E7%9C%8B%E6%9D%BF%E6%96%87%E5%AD%971213_%E7%9B%A7%E5%B4%87%E9%81%931.png?v=1734088162526"
+            data-text="<h3>北美華人百大書畫家 盧崇道<br>
+                   Dao Lu: Among North America’s Top 100 Chinese American Painters and Calligraphers 
+                   </h3>" position="46.52424 35 -130.78302" scale="45.89102 25.27469 86.99743" rotation="0 -90 0">
         </a-image>
+
+        <a-entity light="angle: 30; color: white; intensity: 0.1; penumbra: 0.3; type: spot"
+            position="94.84843 100 -20.75886" rotation="-45 0 180"></a-entity>
         <a-image class="clickable"
-            src="https://cdn.glitch.global/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/lifu_%E7%9B%A7%E5%B4%87%E9%81%93-w.png?v=1726217450249"
-            data-text="中西融合" position="46.524 21.90305 -87.92661" scale="33.39266 19.98065 68.77377"
-            rotation="0 -90 0"></a-image>
+            src="https://cdn.glitch.global/3522d8d1-2d5c-46f9-abb4-965ea7834ded/%E7%9C%8B%E6%9D%BF%E6%96%87%E5%AD%971213_%E7%9B%A7%E5%B4%87%E9%81%932.png?v=1734088216015"
+            data-text="盧崇道（Dao Lu），1954年生於越南，現居美國，師承嶺南畫派大師梁少航，擅長描繪花鳥和走獸，水墨筆觸活潑自然。
+                  他的作品融合國畫技法與西洋色彩，色彩鮮明，構圖獨特。移居美國前，他已是越南知名畫家，畫作一出即售罄。
+                  他多次在中、美、越三國舉辦個展及參加國際聯展，被選為北美華人百大書畫家，現為美國東方藝術會和國際美術家協會會員。
+                  嶺南畫派以顛覆傳統並融合中西畫風著稱，盧崇道繼承此精神，創作出值得收藏的佳作。
+                  <br><br>
+                  Dao Lu, born in Vietnam in 1954 and currently residing in the United States, 
+                  is a distinguished artist who studied under Lingnan School master Liang Shaohang.
+                  He excels in depicting flowers, birds, and animals with vibrant and natural ink brush strokes.
+                  His works merge traditional Chinese painting techniques with Western color schemes,
+                  resulting in vivid colors and unique compositions. Before moving to the United States,
+                  he was already a renowned painter in Vietnam, with his works selling out immediately upon release.
+                  He has held numerous solo exhibitions and participated in international joint exhibitions in China,
+                  the United States, and Vietnam. Recognized as one of the top 100 Chinese calligraphers and painters in North America,
+                  he is a member of the Oriental Art Association of America and the Global Artists Association U.S.A.
+                  The Lingnan School is known for its innovative approach that blends traditional and Western painting styles,
+                  and Dao Lu continues this legacy, creating works that are highly collectible."
+            position="46.524 35 -90" scale="33.39266 27 68.77377" rotation="0 -90 0"></a-image>
         <a-image class="clickable"
-            src="https://cdn.glitch.global/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/lifu_%E5%B7%A61.png?v=1726450969253"
-            data-text="傳承與創新" position="75.99578 24.275 -69.5" scale="47.017 43.122 96.834" rotation=""></a-image>
+            src="https://cdn.glitch.global/3522d8d1-2d5c-46f9-abb4-965ea7834ded/%E7%9C%8B%E6%9D%BF%E6%96%87%E5%AD%971213_%E7%9B%A7%E5%B4%87%E9%81%933.png?v=1734088511322"
+            data-text="<h3>傳承與創新<br>盧崇道賦予嶺南畫派新的生命力<br>Balancing Tradition and Innovation<br>
+                   Dao Lu Infuses New Vitality into the Lingnan School of Painting</h3>
+                   嶺南畫派發展於晚清時期，以顛覆傳統國畫並融合中西畫風著稱，體現了當時追求革命與創新的精神。
+                   盧崇道繼承了這一創新求變的精神。1995年，他受邀赴美參加藝術交流活動後，發展出揉皺宣紙再攤平作畫的技法，開始顛覆嶺南畫派的傳統畫法，融入新的創意，增添畫作意境。
+                   他的創新作品依然保留了嶺南畫派的筆觸，風格隨性自然，不講求工整，墨色深淺交織，展現氣勢磅礡與纖細婉轉的線條變化，充滿生命力，使畫作氣韻生動，並保有嶺南畫派大膽用色和細節處理的精髓。
+                   在傳承與創新中，他賦予嶺南畫派新的生命力。
+                   <br><br>
+                   The Lingnan School of Painting, which emerged during the late Qing Dynasty, 
+                   is celebrated for its subversion of traditional Chinese painting and incorporation of Western styles,
+                   mirroring the era's spirit of revolution and innovation. Dao Lu embraces this spirit of change.
+                   In 1995, after being invited to the United States for an art exchange event,
+                   he developed a technique of wrinkling and then flattening rice paper before painting.
+                   He began to disrupt traditional Lingnan School techniques, infusing new creativity and depth into his works.
+                   Despite his innovations, Dao Lu retains the characteristic brushstrokes of the Lingnan School, 
+                   presenting a casual and natural style that does not emphasize meticulousness. 
+                   The interplay of ink shades showcases both grandeur and delicate, graceful line variations, 
+                   full of vitality, making his works vibrant and dynamic. He also preserves the Lingnan School's essence of bold coloring and detailed treatment.
+                   By balancing tradition and innovation, Dao Lu breathes new life into the Lingnan School of Painting."
+            position="75.99578 35 -69.5" scale="47.017 50 96.834" rotation=""></a-image>
+
         <a-image class="clickable"
             src="https://cdn.glitch.global/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/2.%E9%99%8B%E5%B7%B7%EF%BC%88%E8%B6%8A%E5%8D%97%E8%A5%BF%E8%B2%A2%E9%99%B3%E8%88%88%E9%81%93%EF%BC%89_2017_45x68cm.jpg?v=1726457026114"
-            data-text="陋巷" position="120.12379 23.046 -69.5" scale="28.82 31.697 90.899" rotation=""></a-image>
+            data-text="<h3>陋巷<br>An Alley</h3>
+                   <h5>畫家：盧崇道｜編號：D2024061101-45x68｜尺寸：45x68cm｜材質：中國彩墨畫</h5>
+                   旅居美國多年，2017年盧崇道應邀回到故鄉越南舉辦畫展期間所創。
+                   他顛覆了嶺南畫派不露筆痕的傳統，用乾排筆沾顏料在噴濕的宣紙上作畫，乾濕結合後色彩自然變化，留下明顯筆痕。
+                   作品保留了嶺南畫派的精神，用毛筆沾黑墨以中鋒或側鋒勾勒線條，畫中的天線即為嶺南畫派常見的樹枝畫法，同時融入旅美多年培養的自由風格。
+                   <br><br>
+                   During a return to his hometown of Vietnam in 2017 for an art exhibition, 
+                   Dao Lu created this piece after many years of living in the United States. 
+                   He broke from the Lingnan School's tradition of leaving no visible brushstrokes by using a dry brush dipped in paint on wet rice paper.
+                   This combination of dry and wet techniques allows the colors to change naturally, leaving clear brush marks.
+                   The work retains the spirit of the Lingnan School, using a brush dipped in black ink to outline lines with the tip or the side.
+                   The power lines in the painting are depicted using the tree branch painting method common in the Lingnan School,
+                   while also incorporating the free style he developed during his years in America."
+            position="120.12379 35 -69.5" scale="28.82 31.697 90.899" rotation=""></a-image>
+
+        <a-entity light="angle: 30; color: white; intensity: 0.1; penumbra: 0.3; type: spot"
+            position="197 100 -20.75886" rotation="-45 0 180"></a-entity>
         <a-image class="clickable"
             src="https://cdn.glitch.global/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/3.%E6%9C%88%E4%B8%8B%E9%9B%80%E6%AD%B8%E5%B7%A2_1996_242x122cm-80.jpg?v=1726457054421"
-            data-text="月下雀歸巢" position="195.87734 23.046 -69.5" scale="85.92859 29.26889 79.48748"
-            rotation=""></a-image>
+            data-text="<h3>月下雀歸巢<br>Sparrows Returning Home Under the Moonlight</h3>
+                   <h5>畫家：盧崇道｜編號：D2024061102-122x242｜尺寸：122x242cm｜材質：中國彩墨畫</h5>
+                   良禽擇木而棲！1995年，盧崇道受美國波士頓國際藝術協會邀請，赴美參加藝術交流活動，這次經歷激發了他尋找自己藝術語言的想法。
+                   返回越南後，他揉皺宣紙再攤平作畫，創作出這幅有些地方著色、有些地方留白的獨具特色作品。
+                   畫中鳥兒歡樂地棲息在大榕樹下，沈浸在溫和的月光中，享受自由與快樂。
+                   這幅畫寓意著盧崇道對理想居所的渴望，那是存在心中的故鄉。這幅畫作被選入《北美華人百家書畫集》。
+                   <br><br>
+                   “A fine bird chooses a good tree to perch in!” 
+                   In 1995, Dao Lu was invited by the Boston International Art Association to the United States for an art exchange event.
+                   This experience sparked his quest for his own artistic language. Upon returning to Vietnam,
+                   he developed a unique technique of wrinkling rice paper and then flattening it for painting. 
+                   This piece features areas of color interspersed with blank spaces, showing birds joyfully perching in a large banyan tree, 
+                   bathed in gentle moonlight, enjoying freedom and happiness. The painting symbolizes Dao Lu's longing for an ideal home, a place that exists in his heart. This artwork was included in a collection of artwork by the top 100 Chinese American calligraphers and painters in North America."
+            position="195.87734 35 -69.5" scale="85.92859 29.26889 79.48748" rotation=""></a-image>
+
+        <a-entity light="angle: 30; color: white; intensity: 0.1; penumbra: 0.3; type: spot"
+            position="314 100 -21.17862" rotation="-45 0 180"></a-entity>
+
         <a-image class="clickable"
             src="https://cdn.glitch.global/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/4.%E6%BD%94%E6%B7%A8_2024_45x68cm.JPG?v=1726457042115"
-            data-text="潔淨" position="283.87369 23.046 -69.5" scale="28.82 31.697 90.899" rotation=""></a-image>
+            data-text="<h3>潔淨<br>Purity</h3>
+                   <h5>畫家：盧崇道｜編號：D2024062701-45x68｜尺寸：45x68cm｜材質：中國彩墨畫</h5>
+                   畫中的荷葉與池水以嶺南畫派慣用的潑墨和潑彩技法呈現，但卻以抽象形態亮相。
+                   整幅畫面中，只有出淤泥而不染的白色荷花是具象的，顯得十分潔淨，突顯了畫作的主題。
+                   而點綴在荷花周圍的白點，彷彿是荷花散發的芬芳與光彩。
+                   構圖獨特且充滿生機。這幅畫作是盧崇道向張大千潑墨畫致敬的創作，而他以中國彩墨描繪出西方印象派畫風的意象，更增添了賞畫的亮點，中西合璧，匠心獨具。
+                   <br><br>
+                   In this painting, lotus leaves and pond water are rendered using the Lingnan School's traditional ink-splash and color-splash techniques, 
+                   but with an abstract twist. The only figurative element is the white lotus flower, 
+                   which emerges unstained from the mud, symbolizing purity and highlighting the theme of the work. 
+                   The white dots surrounding the lotus suggest its fragrance and radiance. 
+                   The unique composition brims with vitality. 
+                   This piece pays tribute to Zhang Daqian's ink-splash paintings, while Dao Lu employs Chinese ink and colors to evoke the imagery of Western Impressionist painting, 
+                   creating an intriguing blend of Eastern and Western elements." position="283.87369 35 -69.5"
+            scale="28.82 31.697 90.899" rotation=""></a-image>
+
         <a-image class="clickable"
             src="https://cdn.glitch.global/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/5.%E7%9B%9B%E5%A4%8F_2024_45x68cm.JPG?v=1726457054421"
-            data-text="盛夏" position="343.44615 23.046 -69.5" scale="28.82032 31.69745 90.89912" rotation=""></a-image>
+            data-text="<h3>盛夏<br>Midsummer</h3>
+                   <h5>畫家：盧崇道｜編號：D2024062702-45x68｜尺寸：45x68cm｜材質：中國彩墨畫</h5>
+                   這幅抽象作品展現了荷花池塘的夏日景象。
+                   畫中的荷葉與池水運用了嶺南畫派的潑墨和潑彩技法，以大面積的色塊呈現。
+                   荷花用紅筆勾勒，隱隱約約地露出一兩片，黃色點綴在畫面中，象徵著照耀池塘的陽光。
+                   畫家在這幅畫中大膽運用了潑墨與潑彩，同時細膩地處理每個細節，加上剛中帶柔的隨性筆觸，增添了畫面的生動感。
+                   這幅畫作展現了嶺南畫家深厚底蘊與不斷創新的風範。
+                   <br><br> 
+                   This abstract piece depicts a summer scene in a lotus pond. 
+                   The lotus leaves and pond water are portrayed using the Lingnan School's ink-splash and color-splash techniques, 
+                   with large swathes of color. The lotus flowers are outlined in red, with a few petals subtly visible, and yellow accents scattered throughout the painting symbolize sunlight shining on the pond.
+                   Dao Lu boldly employs these techniques, meticulously handling each detail. 
+                   The dynamic brushstrokes, both strong and gentle, add vibrancy to the scene. 
+                   This work showcases the profound expertise of the Lingnan painter as well as his innovative spirit."
+            position="343.44615 35 -69.5" scale="28.82032 31.69745 90.89912" rotation=""></a-image>
+
+        <a-entity light="angle: 30; color: white; intensity: 0.1; penumbra: 0.3; type: spot"
+            position="327.451 95.88574 3.228" rotation="-43.269 -90 179.684"></a-entity>
+
         <a-image class="clickable"
-            src="https://cdn.glitch.global/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/lifu_%E5%B7%A62.png?v=1726459773922"
-            data-text="七十歲" position="393.33581 23.18 -37.788" scale="37.27188 38.22942 90.899"
-            rotation="0 -90 0"></a-image>
+            src="https://cdn.glitch.global/3522d8d1-2d5c-46f9-abb4-965ea7834ded/%E7%9C%8B%E6%9D%BF%E6%96%87%E5%AD%971213_%E7%9B%A7%E5%B4%87%E9%81%934.png?v=1734088641342"
+            data-text="<h3>七十歲的嶺南派畫家 走進現代抽象畫裡<br>From Tradition to Modernity: 
+                   Dao Lu’s Abstract Art Journey Starting at 70</h3>
+                   中國有句話說：「人生七十才開始」，而盧崇道在七十歲時走進了現代抽象畫的創作世界。
+                   2023年，70歲的盧崇道受到傑克遜·波洛克(Jackson Pollock)的啟發，開始探索全新的創作方式。
+                   他應用嶺南畫派的水墨筆觸、潑墨、潑彩和渲染等技法，展現點、線、面的繪畫風格，並結合印象派的色彩學，創作出帶有東方寫意式的抽象畫。
+                   四季系列作品具有空間感和時間感，充滿生命力，從不同角度觀賞皆能感受到獨特的美感。
+                   此外，他運用了揉皺宣紙再鋪平作畫的獨特技法，使畫面更加有層次和質感，值得收藏與欣賞。
+                   <br><br>
+                   There is an old Chinese saying: “Life begins at seventy.” 
+                   At the age of seventy, Dao Lu entered the world of modern abstract art. 
+                   In 2023, inspired by Jackson Pollock, Dao Lu began exploring entirely new creative methods. 
+                   He applied the Lingnan School's techniques of ink brushstrokes, ink-splash, color-splash, 
+                   and shading to develop a painting style of points, lines, and planes, 
+                   merging these with the color theory of Impressionism to create abstract works with Eastern freehand brushwork. 
+                   This series of paintings possesses a sense of space and time, brimming with vitality, 
+                   and offers a unique beauty from different viewing angles. Additionally, 
+                   he employed his distinctive technique of wrinkling and then flattening rice paper before painting,
+                   adding depth and texture to his works, making them worthy of collection and appreciation."
+            position="393.33581 35 -37.788" scale="37.27188 38.22942 90.899" rotation="0 -90 0"></a-image>
+
         <a-image class="clickable"
             src="https://cdn.glitch.global/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/2.%E6%98%A5_2023_68x137cm(%E6%89%8B%E6%A9%9F%E7%89%88).jpg?v=1726460061217"
-            data-text="春" position="397.5 23.18 -8.96438" scale="15.079 33.68 90.899" rotation="0 -90 0"></a-image>
+            data-text="<h3>春<br>Spring</h3>
+                   <h5>畫家：盧崇道｜編號：D2024062703-68x137｜尺寸：68x137cm｜材質：中國彩墨畫</h5>
+                   這幅作品展現了越南蠟梅迎春的景象，以鮮豔的黃色為主色調，象徵著春天的到來，充滿生機和希望。
+                   畫作中，枝幹和線條以嶺南畫派的筆觸描繪，黃花點點是用潑墨創造的，而彰顯畫作空間感的淡藍色和淡綠色背景則是通過渲染技法展現的。
+                   整體構圖精心安排，讓人感受到畫面的深度和層次。雖是一幅抽象畫，卻能令人心領神會，黃色象徵蠟梅，藍色代表天空和空間，整體色彩鮮豔而和諧，充滿了春天的氣息。
+                   <br><br>
+                   This work captures the scene of Vietnamese wax plum blossoms heralding the arrival of spring. 
+                   The vibrant yellow dominates the painting, symbolizing the season's vitality and hope. 
+                   The branches and lines are rendered with the Lingnan School's brushstrokes, 
+                   while the yellow flowers are brought to life using ink-splash techniques. 
+                   A light blue and green background enhances the sense of space through shading techniques. 
+                   The composition is meticulously arranged, creating a sense of depth and layering. 
+                   Though abstract, the painting clearly conveys the imagery: 
+                   yellow representing the wax plum blossoms and blue symbolizing the sky and space. 
+                   The overall colors are bright and harmonious, imbued with the essence of spring."
+            position="397.5 35 -8.96438" scale="15.079 33.68 90.899" rotation="0 -90 0"></a-image>
+
         <a-image class="clickable"
             src="https://cdn.glitch.global/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/3.%E5%A4%8F_2023_68x137cm.JPG?v=1726460066763"
-            data-text="夏" position="397.5 23.18 12.20117" scale="15.079 33.68 90.899" rotation="0 -90 0"></a-image>
+            data-text="<h3>夏<br>Summer</h3>
+                   <h5>畫家：盧崇道｜編號：D2024062704-68x137｜尺寸：68x137cm｜材質：中國彩墨畫</h5>
+                   這幅抽象畫作靈感來自夏日柳葉隨風搖曳的景象，觀者可從中感受到柳葉隨風飄揚的動感和微風輕拂的清涼。
+                   畫家為此費盡巧思，先用筆墨勾勒主軸和構圖，再用白色線條描繪風的流動，用墨描繪搖曳的柳枝，最後以不同的綠色逐層渲染，細膩地表現柳葉的飄動，展現自然的韻律與輕盈之美。
+                   值得一提的是，他運用了獨特的渲染技法，有時甚至在宣紙背面進行渲染，以避免畫面變得雜亂，這種創新手法賦予畫作更立體和深邃的效果。
+                   <br><br>
+                   Inspired by the scene of willow leaves swaying in the summer breeze, 
+                   this abstract painting captures the dynamic motion of the leaves and the coolness of the gentle wind. 
+                   The artist meticulously outlined the main structure and composition with brush and ink, 
+                   using white lines to depict the wind's flow and ink to portray the swaying willow branches. 
+                   Layers of different shades of green delicately express the leaves' movement, 
+                   showcasing nature's rhythm and lightness. The artist employed unique shading techniques, 
+                   sometimes even shading the back of the rice paper to avoid cluttering the image. 
+                   This innovative method adds a three-dimensional and profound effect to the painting."
+            position="397.5 35 12.20117" scale="15.079 33.68 90.899" rotation="0 -90 0"></a-image>
         <a-image class="clickable"
             src="https://cdn.glitch.global/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/4.%E7%A7%8B_2023_68x137cm.JPG?v=1726460066712"
-            data-text="秋" position="397.5 23.18 34.34143" scale="15.079 33.68 90.899" rotation="0 -90 0"></a-image>
+            data-text="<h3>秋<br>Autumn</h3>
+                   <h5>畫家：盧崇道｜編號：D2024062705-68x137｜尺寸：68x137cm｜材質：中國彩墨畫</h5>
+                   這幅畫作大量使用潑墨和潑彩技法，畫家以黃、橙色展現秋天的色調，層次豐富，色彩堆疊細膩，生動地描繪了楓葉變黃、植物枯黃的秋日景象。
+                   白色線條描繪的野草，不僅提亮了畫面，還增添了獨特的視覺效果。層層堆疊的色彩是一筆一筆描繪上去的，每個細節都顯得精緻且耐人尋味，完美展現了嶺南畫派的精髓。
+                   <br><br>
+                   This painting extensively uses ink-splash and color-splash techniques. 
+                   The artist employs yellow and orange tones to capture the essence of autumn, 
+                   with rich layers and delicate color stacking that vividly depicts the yellowing maple leaves and withering plants of autumn. 
+                   White lines represent wild grass, not only brightening the painting but also adding a unique visual effect. 
+                   The layers of colors are meticulously applied, with each detail appearing exquisite and intriguing, 
+                   perfectly embodying the spirit of the Lingnan School." position="397.5 35 34.34143"
+            scale="15.079 33.68 90.899" rotation="0 -90 0"></a-image>
         <a-image class="clickable"
             src="https://cdn.glitch.global/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/5.%E5%86%AC_2023_68x137cm.JPG?v=1726460081232"
-            data-text="冬" position="397.5 23.18 54.976" scale="15.079 33.68 90.899" rotation="0 -90 0"></a-image>
+            data-text="<h3>冬<br>Winter</h3>
+                   <h5>畫家：盧崇道｜編號：D2024062706-68x137｜尺寸：68x137cm｜材質：中國彩墨畫</h5>
+                   這幅畫作抽象地傳遞了冬日的孤寂與風雪紛飛落在枯樹上的意象。
+                   畫家特別著重用筆技巧，在樹的線條中展現出剛柔並濟的嶺南筆觸，使樹木顯得強壯而富有生命力，這是底蘊深厚的大師才能駕馭的畫作。
+                   雪花通過留白和白粉點綴，營造出雪花飄落在樹枝上的效果。灰色調的點和潑墨技法增強了畫面的層次感與深度。
+                   整幅畫面由點、線、面組成，色彩層次豐富，細節處理精緻。
+                   此作品是春、夏、秋、冬系列中的一幅，整個系列如同四季交替，韻味無窮，值得珍藏。
+                   <br><br>
+                   This piece abstractly conveys the solitude of winter and the imagery of snow falling on barren trees. 
+                   The artist skillfully uses brush techniques, showcasing robust yet gentle Lingnan brushstrokes to depict tree lines, 
+                   making the trees appear strong and full of vitality—a masterful work achievable only by an artist with profound skill. 
+                   Snowflakes are represented through blank spaces and white powder accents, 
+                   effectively creating the illusion of snow resting on branches. 
+                   Gray tones and ink-splash techniques enhance the painting's depth and layering. 
+                   The entire composition is constructed with points, lines, and planes, 
+                   featuring rich color layers and meticulous detail.
+                   This painting is part of a series representing the four seasons: Spring, Summer, Autumn, and Winter. 
+                   The entire series, like the changing seasons, is full of charm and is highly collectible."
+            position="397.5 35 54.976" scale="15.079 33.68 90.899" rotation="0 -90 0"></a-image>
+        <!--        <a-image
+        class="clickable"
+        src="https://cdn.glitch.global/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/5.%E5%86%AC_2023_68x137cm.JPG?v=1726460081232"
+        data-text="<h3>冬<br>Winter</h3>
+                   <h5>畫家：盧崇道｜編號：D2024062706-68x137｜尺寸：68x137cm｜材質：中國彩墨畫</h5>
+                   這幅畫作抽象地傳遞了冬日的孤寂與風雪紛飛落在枯樹上的意象。
+                   畫家特別著重用筆技巧，在樹的線條中展現出剛柔並濟的嶺南筆觸，使樹木顯得強壯而富有生命力，這是底蘊深厚的大師才能駕馭的畫作。
+                   雪花通過留白和白粉點綴，營造出雪花飄落在樹枝上的效果。灰色調的點和潑墨技法增強了畫面的層次感與深度。
+                   整幅畫面由點、線、面組成，色彩層次豐富，細節處理精緻。
+                   此作品是春、夏、秋、冬系列中的一幅，整個系列如同四季交替，韻味無窮，值得珍藏。
+                   <br><br>
+                   This piece abstractly conveys the solitude of winter and the imagery of snow falling on barren trees. 
+                   The artist skillfully uses brush techniques, showcasing robust yet gentle Lingnan brushstrokes to depict tree lines, 
+                   making the trees appear strong and full of vitality—a masterful work achievable only by an artist with profound skill. 
+                   Snowflakes are represented through blank spaces and white powder accents, 
+                   effectively creating the illusion of snow resting on branches. 
+                   Gray tones and ink-splash techniques enhance the painting's depth and layering. 
+                   The entire composition is constructed with points, lines, and planes, 
+                   featuring rich color layers and meticulous detail.
+                   This painting is part of a series representing the four seasons: Spring, Summer, Autumn, and Winter. 
+                   The entire series, like the changing seasons, is full of charm and is highly collectible."
+        data-audio-src="https://cdn.pixabay.com/audio/2024/09/09/audio_7556bb3a41.mp3"
+        position="397.5 35 54.976"
+        scale="15.079 33.68 90.899"
+        rotation="0 -90 0"
+      ></a-image> -->
+
         <!-- 天空背景 -->
         <a-sky
             src="https://cdn.glitch.global/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/panorama-shot-canal-lake-pukaki-twisel-surrounded-with-mountains.jpg?v=1726480294831"></a-sky>
         <!-- <a-sky color="#ECECEC"></a-sky> -->
+
+
     </a-scene>
 
     <div id="popupUI" class="mask">
         <div>
-            <img />
-            <div>
-                <p />
+            <div class="imageFrame">
+                <div class="controlImage">
+                    <i class="fa-solid fa-magnifying-glass-plus"></i>
+                    <i class="fa-solid fa-magnifying-glass-minus"></i>
+                </div>
+                <div class="image">
+                    <img />
+                </div>
             </div>
-            <button id="closeButton">X</button>
+            <div class="content">
+                <div class="contentText"></div>
+                <audio controls type="audio/mpeg" controlslist="nodownload"></audio>
+            </div>
+            <button id="closeButton" class="closeButton">&#10060;</button>
         </div>
     </div>
 
     <div id="popupVideo" class="mask">
         <div>
             <video controls></video>
-            <div>
-                <p />
-            </div>
-            <button id="closeButton2">X</button>
+
+            <button id="closeButton2" class="closeButton">&#10060;</button>
+        </div>
+    </div>
+
+    <div id="spotMenu" class="spotMenu">
+        <button id="spotMenuToggleButton" class="toggleButton">
+            <i class="arrow down"></i>
+        </button>
+        <div id="spotList" class="menu">
+            <button data-position="0 35 0" data-rotation="0 0 0">
+                入口<br />
+                ENTRANCE
+            </button>
+
+            <button data-position="-10.41433 35 -108.591" data-rotation="0.22918311805233704 88.23550045014692">
+                李欽泓<br />
+                CHINGHUNG LEE
+            </button>
+
+            <button data-position="-106.50478304387448 35 -31.191341849409937"
+                data-rotation="-0.6875493541569832 1.0313240312354568">
+                色彩之王系列1<br />
+                "KING OF COLOR" SERIES 1
+            </button>
+
+            <button data-position="-204.15103535381098 35 -29.43351945891216"
+                data-rotation="-0.6875493541569832 1.0313240312354568">
+                色彩之王系列2<br />
+                "KING OF COLOR" SERIES 2
+            </button>
+
+            <button data-position="-306.0805188025907 35 -27.598590580234635"
+                data-rotation="-0.6875493541569832 1.0313240312354568">
+                色彩之王系列3<br />
+                "KING OF COLOR" SERIES 3
+            </button>
+
+            <button data-position="-343.7980313526764 35 -1.1189796122931934"
+                data-rotation="-1.718873385392467 88.80845824527754">
+                玉質化色彩介紹<br />
+                JADE-LIKE RADIANCE
+            </button>
+
+            <button data-position="-310.06721149008035 35 10.765745637382029"
+                data-rotation="-1.6042818263663023 179.79415611205204">
+                爆破寫生系列<br />
+                "EXPLOSIVE SKETCHING"SERIES
+            </button>
+
+            <button data-position="-141.67058574649576 35 -2.8414436027987335"
+                data-rotation="-1.6042818263663023 179.79415611205204">
+                霹靂繪畫系列<br />
+                “THE THUNDERBOLT PAINTING” SERIES
+            </button>
+
+            <button data-position="153.12958939173748 35 -15.554524048179363"
+                data-rotation="-1.4896902673401375 179.56497299399973">
+                蓮花寫生系列1<br />
+                "LOTUS SKETCH" SERIES 1
+            </button>
+
+            <button data-position="327.4728673424683 35 16.35836968779861"
+                data-rotation="-1.6042818263663023 179.79415611205204">
+                蓮花寫生系列2<br />
+                "LOTUS SKETCH" SERIES 2
+            </button>
+
+            <button data-position="2.9418715509820426 35 -109.21461971107466"
+                data-rotation="-2.40642273954945 -89.49600759943448">
+                盧崇道<br />
+                DAO LU
+            </button>
+
+            <button data-position="151.7601713094592 35 8.700441878710006"
+                data-rotation="-0.9167324722093082 1.4896902673402825">
+                嶺南畫派創新系列1<br />
+                "LINGNAN SCHOOL OF PAINTING" SEIRES 1
+            </button>
+
+            <button data-position="313.231808784233 35 -19.43238488671397"
+                data-rotation="-1.4896902673401318 1.4193225266030943e-13">
+                嶺南畫派創新系列2<br />
+                "LINGNAN SCHOOL OF PAINTING" SEIRES 2
+            </button>
+
+            <button data-position="335.51023077516425 35 -0.3965214127450071"
+                data-rotation="-0.3437746770784862 -90.06896539456528">
+                四季系列<br />
+                FOUR SEASONS
+            </button>
+
+            <button data-position="0 35 0" data-rotation="0 0 0">
+                入口<br />
+                ENTRANCE
+            </button>
+
         </div>
     </div>
 
     <!-- 引入外部 JavaScript 文件 -->
-    <!--      <script src="clickImageUI.js"></script>-->
-    <!--<script src="clickToMove.js"></script>-->
     <script src="moveToSpot.js"></script>
+    <script src="spotMenu.js"></script>
     <script src="clickUI.js"></script>
-    <!--     <script src="clickVideoUI.js"></script>-->
-    <!--     <script src="wasdRotate.js"></script> -->
+    <!--     <script src="zoomInAndOutWithWheel.js"></script> -->
 </body>
 
 </html>

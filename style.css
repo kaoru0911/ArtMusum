@@ -4,7 +4,78 @@ button {
     background: none;
 }
 
+.image-frame {
+    border: 5px solid black;
+    /* 黑框 */
+    background-color: white;
+    /* 白色背景 */
+    padding: 10px;
+    /* 內邊距 */
+}
+
+.spotMenu {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0, #000000);
+    padding: 10px;
+    transition: 0.3s;
+}
+
+
+#spotList {
+    display: inline-flex;
+    width: 100%;
+    overflow: auto;
+}
+
+.toggleButton {
+    position: absolute;
+    transform: translate(-50%) perspective(5px) rotateX(2deg) scale(1.5);
+    background: rgba(0, 0, 0, 0.2);
+    width: 50px !important;
+    height: 25px;
+    top: -34px;
+    left: 50%;
+    border-radius: 10px 10px 0 0;
+}
+
+.spotMenu button {
+    flex-shrink: 0;
+    width: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 80%;
+    font-weight: 700;
+    color: silver;
+}
+
+.spotMenu button:hover {
+    color: white;
+}
+
+.spotMenu button img {
+    width: 100%;
+    height: 98px;
+    margin-bottom: 8px;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+.arrow {
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(45deg);
+}
+
 #popupUI {
+    --audio-width: 250px;
+
     position: absolute;
     top: 0;
     left: 0;
@@ -14,6 +85,26 @@ button {
     display: none;
     align-items: center;
     justify-content: center;
+    z-index: 1;
+}
+
+#popupUI .content {
+    overflow-y: auto;
+    max-height: 80vh;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: top;
+    text-align: left;
+    width: 50%;
+    overflow: auto;
+}
+
+#popupUI audio {
+    margin-top: 20px;
+    width: var(--audio-width);
+    display: none;
 }
 
 #popupUI>div {
@@ -26,36 +117,75 @@ button {
     gap: 10px;
     height: 80%;
     width: 80%;
-    border-radius: 10px
+    border-radius: 10px;
 }
 
-#popupUI>div::after {
-    content: attr(data-text);
+#popupUI .imageFrame {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
-#popupUI img {
+#popupUI .controlImage {
+    width: 100%;
+    text-align: center;
+}
+
+#popupUI .controlImage i {
+    font-size: 18px;
+    color: silver;
+    cursor: pointer;
+}
+
+#popupUI .controlImage i:hover {
+    color: gray;
+}
+
+#popupUI .image {
+    display: flex;
+    height: 98%;
+    width: 100%;
+    overflow: auto;
+}
+
+#popupUI .image img {
+    flex-shrink: 0;
+    margin: auto;
+    width: 100%;
+    height: auto;
     max-height: 100%;
-    width: 80%;
     object-fit: contain;
-    border-radius: 10px
 }
 
 @media (max-width: 450px) {
     #popupUI>div {
         flex-flow: column;
+        height: auto;
+        overflow: auto;
     }
 
-    #popupUI img {
+    #popupUI .content {
         width: 100%;
-        border-radius: 10px
+    }
+
+    #popupUI .imageFrame {
+        flex: 1;
+    }
+
+    #popupUI .image {
+        height: auto;
+        max-height: 70vh;
     }
 }
 
-#closeButton {
+.closeButton {
     position: absolute;
     top: 0;
     right: 0;
-    padding: 5px;
+    padding: 10px;
+    filter: grayscale(1);
+    font-size: 14px;
 }
 
 #popupVideo {
@@ -91,7 +221,7 @@ button {
     max-height: 100%;
     width: 80%;
     object-fit: contain;
-    border-radius: 10px
+    border-radius: 10px;
 }
 
 @media (max-width: 450px) {
@@ -103,11 +233,4 @@ button {
         width: 80%;
         border-radius: 10px;
     }
-}
-
-#closeButton2 {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 5px;
 }

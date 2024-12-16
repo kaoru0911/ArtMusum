@@ -19,7 +19,7 @@ spots.forEach(spot => {
     };
 
     // 动画持续时间（毫秒）
-    const duration = 3000; // 3秒
+    const duration = 1000; // 1秒
     const startTime = performance.now();
 
     // 动画更新函数
@@ -47,3 +47,4 @@ spots.forEach(spot => {
     requestAnimationFrame(animateCamera);
   });
 });
+
