@@ -234,3 +234,63 @@ button {
         border-radius: 10px;
     }
 }
+
+.artistSpots {
+    display: none;
+    width: 100%;
+}
+
+.artistSpots.active {
+    display: inline-flex;  /* 改為 inline-flex */
+    width: 100%;
+    overflow-x: auto;  /* 添加橫向捲軸 */
+}
+
+/* 確保按鈕容器也是橫向排列 */
+#spotList {
+    width: 100%;
+    overflow-x: auto;
+}
+
+/* 美化捲軸樣式 */
+.artistSpots::-webkit-scrollbar {
+    height: 8px;
+}
+
+.artistSpots::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+}
+
+.artistSpots::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+}
+
+/* 標籤樣式優化 */
+.tabContainer {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    padding: 0 10px;
+}
+
+.tabButton {
+    padding: 8px 16px;
+    background: rgba(0, 0, 0, 0.3);
+    color: silver;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.tabButton:hover {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.tabButton.active {
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+}
