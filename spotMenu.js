@@ -31,86 +31,143 @@ function controlMenu() {
 
 // 標籤切換功能
 function initTabSwitch() {
-  const tabButtons = document.querySelectorAll('.tabButton, .entrance-button'); // 修改選擇器以包含入口按鈕
+    const tabButtons = document.querySelectorAll('.tabButton, .entrance-button');
     
-  tabButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      // 移除所有active狀態
-      tabButtons.forEach(btn => btn.classList.remove('active'));
-      
-      // 隱藏所有藝術家的spots
-      document.querySelectorAll('.artistSpots').forEach(spots => {
-        spots.classList.remove('active');
-      });
-      
-      // 添加新的active狀態
-      button.classList.add('active');
-      
-      // 顯示選中藝術家的spots
-      const artist = button.getAttribute('data-artist');
-      const targetSpots = button.classList.contains('entrance-button') 
-        ? document.querySelector('.artistSpots') // 如果是入口按鈕，顯示所有藝術家的spots
-        : document.querySelector(`.artistSpots.${artist}`);
-      
-      if (targetSpots) {
-        targetSpots.classList.add('active');
-      }
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // 移除所有active状态
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            
+            // 隐藏所有艺术家的spots
+            document.querySelectorAll('.artistSpots').forEach(spots => {
+                spots.classList.remove('active');
+            });
+            
+            // 添加新的active状态
+            button.classList.add('active');
+            
+            // 显示选中艺术家的spots
+            const artist = button.getAttribute('data-artist');
+            const targetSpots = button.classList.contains('entrance-button') 
+                ? document.querySelector('.artistSpots') 
+                : document.querySelector(`.artistSpots.${artist}`);
+            
+            if (targetSpots) {
+                targetSpots.classList.add('active');
+            }
 
-      // 新增：使用data-position和data-rotation設置相機位置和旋轉
-      const position = button.getAttribute("data-position").split(" ");
-      const rotation = button.getAttribute("data-rotation").split(" ");
-      const cameraEl = document.getElementById("camera");
+            // 获取目标位置和旋转角度
+            const position = button.getAttribute("data-position").split(" ");
+            const rotation = button.getAttribute("data-rotation").split(" ");
+            const cameraEl = document.getElementById("camera");
+            const lookControls = cameraEl.components["look-controls"];
 
-      cameraEl.setAttribute("position", {
-        x: parseFloat(position[0]),
-        y: parseFloat(position[1]),
-        z: parseFloat(position[2]),
-      });
+            // 获取当前位置和目标位置
+            const currentPos = cameraEl.getAttribute("position");
+            const targetPos = {
+                x: parseFloat(position[0]),
+                y: parseFloat(position[1]),
+                z: parseFloat(position[2])
+            };
 
-      cameraEl.components["look-controls"].pitchObject.rotation.set(
-        window.AFRAME.THREE.MathUtils.degToRad(parseFloat(rotation[0])),
-        0,
-        0
-      );
-      cameraEl.components["look-controls"].yawObject.rotation.set(
-        0,
-        window.AFRAME.THREE.MathUtils.degToRad(parseFloat(rotation[1])),
-        0
-      );
+            // 获取当前旋转和目标旋转
+            const currentRotX = lookControls.pitchObject.rotation.x;
+            const currentRotY = lookControls.yawObject.rotation.y;
+            const targetRotX = window.AFRAME.THREE.MathUtils.degToRad(parseFloat(rotation[0]));
+            const targetRotY = window.AFRAME.THREE.MathUtils.degToRad(parseFloat(rotation[1]));
+
+            // 动画时长（毫秒）
+            const duration = 1000;
+            const startTime = Date.now();
+
+            function animate() {
+                const elapsedTime = Date.now() - startTime;
+                const progress = Math.min(elapsedTime / duration, 1);
+
+                // 使用 easeInOutQuad 缓动函数
+                const easeProgress = progress < 0.5
+                    ? 2 * progress * progress
+                    : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+
+                // 更新位置
+                cameraEl.setAttribute("position", {
+                    x: currentPos.x + (targetPos.x - currentPos.x) * easeProgress,
+                    y: currentPos.y + (targetPos.y - currentPos.y) * easeProgress,
+                    z: currentPos.z + (targetPos.z - currentPos.z) * easeProgress
+                });
+
+                // 更新旋转
+                lookControls.pitchObject.rotation.x = currentRotX + (targetRotX - currentRotX) * easeProgress;
+                lookControls.yawObject.rotation.y = currentRotY + (targetRotY - currentRotY) * easeProgress;
+
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                }
+            }
+
+            animate();
+        });
     });
-  });
 }
 
 // 初始化定位按鈕功能
 function initSpotButtons() {
-  const spotButtons = document.querySelectorAll("#spotList button");
+    const spotButtons = document.querySelectorAll("#spotList button");
 
-  spotButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      const position = button.getAttribute("data-position").split(" ");
-      const rotation = button.getAttribute("data-rotation").split(" ");
-      const cameraEl = document.getElementById("camera");
+    spotButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+            const position = button.getAttribute("data-position").split(" ");
+            const rotation = button.getAttribute("data-rotation").split(" ");
+            const cameraEl = document.getElementById("camera");
+            const lookControls = cameraEl.components["look-controls"];
 
-      cameraEl.setAttribute("position", {
-        x: parseFloat(position[0]),
-        y: parseFloat(position[1]),
-        z: parseFloat(position[2]),
-      });
+            // 获取当前位置和目标位置
+            const currentPos = cameraEl.getAttribute("position");
+            const targetPos = {
+                x: parseFloat(position[0]),
+                y: parseFloat(position[1]),
+                z: parseFloat(position[2])
+            };
 
-      cameraEl.components["look-controls"].pitchObject.rotation.set(
-        window.AFRAME.THREE.MathUtils.degToRad(parseFloat(rotation[0])),
-        0,
-        0
-      );
-      cameraEl.components["look-controls"].yawObject.rotation.set(
-        0,
-        window.AFRAME.THREE.MathUtils.degToRad(parseFloat(rotation[1])),
-        0
-      );
+            // 获取当前旋转和目标旋转
+            const currentRotX = lookControls.pitchObject.rotation.x;
+            const currentRotY = lookControls.yawObject.rotation.y;
+            const targetRotX = window.AFRAME.THREE.MathUtils.degToRad(parseFloat(rotation[0]));
+            const targetRotY = window.AFRAME.THREE.MathUtils.degToRad(parseFloat(rotation[1]));
+
+            // 动画时长（毫秒）
+            const duration = 1000;
+            const startTime = Date.now();
+
+            function animate() {
+                const elapsedTime = Date.now() - startTime;
+                const progress = Math.min(elapsedTime / duration, 1);
+
+                // 使用 easeInOutQuad 缓动函数
+                const easeProgress = progress < 0.5
+                    ? 2 * progress * progress
+                    : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+
+                // 更新位置
+                cameraEl.setAttribute("position", {
+                    x: currentPos.x + (targetPos.x - currentPos.x) * easeProgress,
+                    y: currentPos.y + (targetPos.y - currentPos.y) * easeProgress,
+                    z: currentPos.z + (targetPos.z - currentPos.z) * easeProgress
+                });
+
+                // 更新旋转
+                lookControls.pitchObject.rotation.x = currentRotX + (targetRotX - currentRotX) * easeProgress;
+                lookControls.yawObject.rotation.y = currentRotY + (targetRotY - currentRotY) * easeProgress;
+
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                }
+            }
+
+            animate();
+        });
     });
-  });
 }
-
 // 獲取相機位置和旋轉角度(用於開發)
 function getPostionAndRotation() {
   const cameraEl = document.getElementById("camera");
