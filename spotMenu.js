@@ -7,8 +7,10 @@ function controlMenu() {
 
   function closeSpotMenu() {
     isOpen = false;
-    menuBody.style = "transform: translateY(100%);";
-    arrow.style = "transform: translateY(4px) rotate(-135deg);";
+    menuBody.style.transition = "transform 0.3s ease"; // 新增：添加過渡效果
+    menuBody.style.transform = "translateY(100%)"; // 修改：使用transform屬性
+    arrow.style.transition = "transform 0.3s ease"; // 新增：添加過渡效果
+    arrow.style.transform = "translateY(4px) rotate(-135deg)"; // 修改：使用transform屬性
   }
 
   function toggleSpotMenu() {
@@ -16,8 +18,10 @@ function controlMenu() {
       closeSpotMenu();
     } else {
       isOpen = true;
-      menuBody.style = "transform: translateY(0);";
-      arrow.style = "transform: rotate(45deg);";
+      menuBody.style.transition = "transform 0.3s ease"; // 新增：添加過渡效果
+      menuBody.style.transform = "translateY(0)"; // 修改：使用transform屬性
+      arrow.style.transition = "transform 0.3s ease"; // 新增：添加過渡效果
+      arrow.style.transform = "rotate(45deg)"; // 修改：使用transform屬性
     }
   }
 
@@ -27,7 +31,7 @@ function controlMenu() {
 
 // 標籤切換功能
 function initTabSwitch() {
-  const tabButtons = document.querySelectorAll('.tabButton');
+  const tabButtons = document.querySelectorAll('.tabButton, .entrance-button'); // 修改選擇器以包含入口按鈕
     
   tabButtons.forEach(button => {
     button.addEventListener('click', () => {
@@ -44,10 +48,35 @@ function initTabSwitch() {
       
       // 顯示選中藝術家的spots
       const artist = button.getAttribute('data-artist');
-      const targetSpots = document.querySelector(`.artistSpots.${artist}`);
+      const targetSpots = button.classList.contains('entrance-button') 
+        ? document.querySelector('.artistSpots') // 如果是入口按鈕，顯示所有藝術家的spots
+        : document.querySelector(`.artistSpots.${artist}`);
+      
       if (targetSpots) {
         targetSpots.classList.add('active');
       }
+
+      // 新增：使用data-position和data-rotation設置相機位置和旋轉
+      const position = button.getAttribute("data-position").split(" ");
+      const rotation = button.getAttribute("data-rotation").split(" ");
+      const cameraEl = document.getElementById("camera");
+
+      cameraEl.setAttribute("position", {
+        x: parseFloat(position[0]),
+        y: parseFloat(position[1]),
+        z: parseFloat(position[2]),
+      });
+
+      cameraEl.components["look-controls"].pitchObject.rotation.set(
+        window.AFRAME.THREE.MathUtils.degToRad(parseFloat(rotation[0])),
+        0,
+        0
+      );
+      cameraEl.components["look-controls"].yawObject.rotation.set(
+        0,
+        window.AFRAME.THREE.MathUtils.degToRad(parseFloat(rotation[1])),
+        0
+      );
     });
   });
 }
@@ -103,4 +132,3 @@ window.addEventListener('load', function() {
   initTabSwitch();
   initSpotButtons();
 });
-
