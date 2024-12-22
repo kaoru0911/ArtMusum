@@ -77,7 +77,7 @@ function initTabSwitch() {
             const targetRotY = window.AFRAME.THREE.MathUtils.degToRad(parseFloat(rotation[1]));
 
             // 动画时长（毫秒）
-            const duration = 1000;
+            const duration = 2000;
             const startTime = Date.now();
 
             function animate() {
@@ -136,7 +136,7 @@ function initSpotButtons() {
             const targetRotY = window.AFRAME.THREE.MathUtils.degToRad(parseFloat(rotation[1]));
 
             // 动画时长（毫秒）
-            const duration = 1000;
+            const duration = 2000;
             const startTime = Date.now();
 
             function animate() {
