@@ -9,6 +9,18 @@ let tourState = {
 // 定义导览序列
 let tourSequence = [];
 
+function updateCurrentSpotHighlight(currentButton) {
+    // 移除所有按鈕的 hover 效果
+    document.querySelectorAll('.spotMenu button').forEach(btn => {
+        btn.classList.remove('current-spot');
+    });
+    
+    // 為當前按鈕添加 hover 效果
+    if (currentButton) {
+        currentButton.classList.add('current-spot');
+    }
+}
+
 // 定义移动到下一个点的函数（移到全局作用域）
 function moveToNextSpot() {
     if (!tourState.isRunning || tourState.currentIndex >= tourSequence.length) {
@@ -19,6 +31,9 @@ function moveToNextSpot() {
     if (tourState.isPaused) return;
 
     const currentButton = tourSequence[tourState.currentIndex];
+  
+      // 更新當前站點的 hover 效果
+    updateCurrentSpotHighlight(currentButton);
     
     // 如果是标签按钮，触发标签切换
     if (currentButton.classList.contains('tabButton') || 
@@ -165,6 +180,8 @@ function stopTour() {
     if (tourState.currentTimeout) {
         clearTimeout(tourState.currentTimeout);
     }
+    // 清除所有 hover 效果
+    updateCurrentSpotHighlight(null);
     updateTourButtons();
 }
 
@@ -180,10 +197,10 @@ function updateTourButtons() {
         stopBtn.style.display = 'inline';
         
         if (tourState.isPaused) {
-            pauseBtn.textContent = '繼續導覽';
+            pauseBtn.innerHTML = '繼續導覽<br>Resume Tour';
             pauseBtn.onclick = resumeTour;
         } else {
-            pauseBtn.textContent = '暫停導覽';
+            pauseBtn.innerHTML = '暫停導覽<br>Pause Tour';
             pauseBtn.onclick = pauseTour;
         }
     } else {
@@ -201,36 +218,57 @@ window.addEventListener('load', function() {
     controlsContainer.style.left = '20px';
     controlsContainer.style.display = 'flex';
     controlsContainer.style.gap = '10px';
-
-    // 开始按钮
+ // 开始按钮
     const startButton = document.createElement('button');
     startButton.id = 'startTourBtn';
-    startButton.textContent = '開始導覽';
+    startButton.innerHTML = '開始導覽<br>Start Tour';
     startButton.onclick = startAutoTour;
 
     // 暂停按钮
     const pauseButton = document.createElement('button');
     pauseButton.id = 'pauseTourBtn';
-    pauseButton.textContent = '暫停導覽';
+    pauseButton.innerHTML = '暫停導覽<br>Pause Tour';
     pauseButton.onclick = pauseTour;
     pauseButton.style.display = 'none';
 
     // 停止按钮
     const stopButton = document.createElement('button');
     stopButton.id = 'stopTourBtn';
-    stopButton.textContent = '停止導覽';
+    stopButton.innerHTML = '停止導覽<br>Stop Tour';
     stopButton.onclick = stopTour;
     stopButton.style.display = 'none';
 
-    // 设置按钮样式
+ // 设置按钮样式
     [startButton, pauseButton, stopButton].forEach(button => {
-        button.style.padding = '10px';
+      // 基本样式
+        button.style.padding = '5px';  // 增加内边距
         button.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
         button.style.color = 'white';
         button.style.border = 'none';
         button.style.borderRadius = '5px';
         button.style.cursor = 'pointer';
+        button.style.fontSize = '80%';  // 设置字体大小
+        button.style.lineHeight = '1.5';  // 设置行高，让换行更美观
+        button.style.textAlign = 'center';  // 确保文字居中
+        button.style.minWidth = '100px';  // 设置最小宽度，确保按钮大小一致
+        button.style.transition = 'all 0.3s ease'; // 添加过渡效果
+      
+         // 添加hover效果
+        button.addEventListener('mouseenter', function() {
+            this.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+            this.style.transform = 'scale(1.05)';
+            this.style.boxShadow = '0 0 10px rgba(255, 255, 255, 0.3)';
+        });
+
+        button.addEventListener('mouseleave', function() {
+            this.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+            this.style.transform = 'scale(1)';
+            this.style.boxShadow = 'none';
+        });
     });
+  
+  
+  
 
     // 添加按钮到容器
     controlsContainer.appendChild(startButton);

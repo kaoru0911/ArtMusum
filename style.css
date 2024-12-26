@@ -4,6 +4,30 @@ button {
     background: none;
 }
 
+.spotMenu button.current-spot {
+    color: white;
+    position: relative;
+}
+
+.spotMenu button.current-spot::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30%;
+    height: 2px;
+    background-color: white;
+    border-radius: 1px;
+}
+
+/* 標籤按鈕的 hover 效果 */
+.tabButton.current-spot,
+.entrance-button.current-spot {
+    background: rgba(255, 255, 255, 0.2) !important;
+    color: white !important;
+    border-radius: 5px;
+}
 
 .artistSpots {
     display: none;
@@ -16,12 +40,6 @@ button {
     width: 100%;
     overflow-x: auto;
     /* 添加橫向捲軸 */
-}
-
-/* 確保按鈕容器也是橫向排列 */
-#spotList {
-    width: 100%;
-    overflow-x: auto;
 }
 
 /* 美化捲軸樣式 */
@@ -38,6 +56,7 @@ button {
     background: rgba(255, 255, 255, 0.3);
     border-radius: 4px;
 }
+
 
 /* 標籤樣式優化 */
 .tabContainer {
@@ -76,21 +95,27 @@ button {
     /* 內邊距 */
 }
 
+/* 修改 spotMenu 的樣式 */
 .spotMenu {
     position: fixed;
     left: 0;
     right: 0;
     bottom: 0;
     background: linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0, #000000);
-    padding: 10px;
+    padding: 20px 10px;
+    /* 增加上下內邊距 */
     transition: 0.3s;
+    height: auto;
+    /* 自適應高度 */
 }
 
 
+/* 修改按鈕容器樣式 */
 #spotList {
-    display: inline-flex;
     width: 100%;
-    overflow: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
+    /* 禁用垂直捲軸 */
 }
 
 .toggleButton {
@@ -118,6 +143,9 @@ button {
 
 .spotMenu button:hover {
     color: white;
+    background: rgba(255, 255, 255, 0.2) !important;
+    border-radius: 5px;
+
 }
 
 .spotMenu button img {
