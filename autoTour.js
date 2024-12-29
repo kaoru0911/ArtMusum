@@ -194,10 +194,10 @@ function addNavigationArrows() {
     arrowContainer.id = 'navigationArrows';
 
     // 创建左右箭头
-    const leftArrow = createArrow('←', () => {
+    const leftArrow = createArrow('prev', () => {
         navigateTour('prev');
     });
-    const rightArrow = createArrow('→', () => {
+    const rightArrow = createArrow('next', () => {
         navigateTour('next');
     });
 
@@ -216,10 +216,34 @@ function addNavigationArrows() {
 
 
 // 创建箭头按钮
-function createArrow(text, onClick) {
+function createArrow(direction, onClick) {
     const arrow = document.createElement('button');
-    arrow.className = 'nav-arrow';
-    arrow.textContent = text;
+    arrow.className = `nav-arrow ${direction === 'prev' ? 'prev' : 'next'}`;
+    
+    // 創建箭頭圖標
+    const arrowIcon = document.createElement('span');
+    arrowIcon.className = 'arrow-icon';
+    arrowIcon.textContent = direction === 'prev' ? '←' : '→';
+    
+    // 創建文字容器
+    const textContainer = document.createElement('div');
+    textContainer.className = 'arrow-text';
+    
+    if (direction === 'prev') {
+        textContainer.innerHTML = '上一步<br>Previous';
+    } else {
+        textContainer.innerHTML = '下一步<br>Next';
+    }
+    
+    // 根據方向決定元素順序
+    if (direction === 'prev') {
+        arrow.appendChild(arrowIcon);
+        arrow.appendChild(textContainer);
+    } else {
+        arrow.appendChild(textContainer);
+        arrow.appendChild(arrowIcon);
+    }
+    
     arrow.onclick = onClick;
     return arrow;
 }
