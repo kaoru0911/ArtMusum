@@ -3,11 +3,12 @@ let tourState = {
     isRunning: false,
     isPaused: false,
     currentTimeout: null,
-    currentIndex: 0
+    currentIndex: 0,
+    sequence: [] // 存儲導覽序列
 };
 
-// 定义导览序列
-let tourSequence = [];
+// 添加导览模式状态
+let tourMode = null; // 'auto' 或 'manual'
 
 function updateCurrentSpotHighlight(currentButton) {
     // 移除所有按鈕的 hover 效果
@@ -21,18 +22,30 @@ function updateCurrentSpotHighlight(currentButton) {
     }
 }
 
-// 定义移动到下一个点的函数（移到全局作用域）
+// 更新箭頭顯示狀態
+function updateArrowsVisibility() {
+    const arrowContainer = document.getElementById('navigationArrows');
+    if (!arrowContainer) return;
+
+    if (tourMode === 'manual') {
+        arrowContainer.classList.add('manual-mode');
+    } else {
+        arrowContainer.classList.remove('manual-mode');
+    }
+}
+
+// 定义移动到下一个点的函数
 function moveToNextSpot() {
-    if (!tourState.isRunning || tourState.currentIndex >= tourSequence.length) {
+    if (!tourState.isRunning || tourState.currentIndex >= tourState.sequence.length) {
         stopTour();
         return;
     }
 
     if (tourState.isPaused) return;
 
-    const currentButton = tourSequence[tourState.currentIndex];
-  
-      // 更新當前站點的 hover 效果
+    const currentButton = tourState.sequence[tourState.currentIndex];
+    
+    // 更新當前站點的 hover 效果
     updateCurrentSpotHighlight(currentButton);
     
     // 如果是标签按钮，触发标签切换
@@ -61,7 +74,7 @@ function moveToNextSpot() {
         }
     }
 
- // 获取目标位置和旋转角度
+    // 获取目标位置和旋转角度
     const position = currentButton.getAttribute("data-position").split(" ");
     const rotation = currentButton.getAttribute("data-rotation").split(" ");
     const cameraEl = document.getElementById("camera");
@@ -74,8 +87,8 @@ function moveToNextSpot() {
         y: parseFloat(position[1]),
         z: parseFloat(position[2])
     };
-
-    // 获取当前旋转和目标旋转
+  
+      // 获取当前旋转和目标旋转
     const currentRotX = lookControls.pitchObject.rotation.x;
     const currentRotY = lookControls.yawObject.rotation.y;
     const targetRotX = window.AFRAME.THREE.MathUtils.degToRad(parseFloat(rotation[0]));
@@ -88,7 +101,7 @@ function moveToNextSpot() {
 
     const startTime = Date.now();
     const moveDuration = 3000; // 移动时间3秒
-    const stayDuration = 5000; // 每个站点停留5秒
+    const stayDuration = tourMode === 'auto' ? 5000 : 0; // 自动模式停留5秒，手动模式不停留
 
     function animate() {
         if (!tourState.isRunning || tourState.isPaused) return;
@@ -112,8 +125,8 @@ function moveToNextSpot() {
 
         if (progress < 1) {
             requestAnimationFrame(animate);
-        } else {
-            // 动画完成后，等待一段时间再移动到下一个点
+        } else if (tourMode === 'auto' && !tourState.isPaused) {
+            // 只在自动模式且未暂停时自动前进到下一个点
             tourState.currentTimeout = setTimeout(() => {
                 tourState.currentIndex++;
                 moveToNextSpot();
@@ -124,33 +137,138 @@ function moveToNextSpot() {
     animate();
 }
 
-// 自动导览功能
+// 开始导览选择模式
 function startAutoTour() {
-    // 如果导览正在运行，则返回
     if (tourState.isRunning) return;
 
+    const modalContainer = document.createElement('div');
+    modalContainer.className = 'tour-modal-overlay';
+
+    const modalContent = document.createElement('div');
+    modalContent.className = 'tour-modal-content';
+
+    const title = document.createElement('h3');
+    title.textContent = '請選擇導覽模式 Select Tour Mode';
+    title.style.marginBottom = '20px';
+
+    const buttonContainer = document.createElement('div');
+    buttonContainer.className = 'tour-mode-container';
+
+    // 自动导览按钮
+    const autoButton = document.createElement('button');
+    autoButton.className = 'tour-mode-button';
+    autoButton.innerHTML = '自動導覽<br>Auto Tour';
+    autoButton.onclick = () => {
+        tourMode = 'auto';
+        modalContainer.remove();
+        startTour();
+    };
+
+    // 手动导览按钮
+    const manualButton = document.createElement('button');
+    manualButton.className = 'tour-mode-button';
+    manualButton.innerHTML = '手動導覽<br>Manual Tour';
+    manualButton.onclick = () => {
+        tourMode = 'manual';
+        modalContainer.remove();
+        startTour();
+    };
+
+    buttonContainer.appendChild(autoButton);
+    buttonContainer.appendChild(manualButton);
+    modalContent.appendChild(title);
+    modalContent.appendChild(buttonContainer);
+    modalContainer.appendChild(modalContent);
+    document.body.appendChild(modalContainer);
+}
+
+// 添加导航箭头
+function addNavigationArrows() {
+    // 如果已存在箭头，则先移除
+    const existingArrows = document.getElementById('navigationArrows');
+    if (existingArrows) {
+        existingArrows.remove();
+    }
+
+    const arrowContainer = document.createElement('div');
+    arrowContainer.id = 'navigationArrows';
+
+    // 创建左右箭头
+    const leftArrow = createArrow('←', () => {
+        navigateTour('prev');
+    });
+    const rightArrow = createArrow('→', () => {
+        navigateTour('next');
+    });
+
+    // 在初始狀態下隱藏左箭頭
+    if (tourState.currentIndex === 0) {
+        leftArrow.style.visibility = 'hidden';
+    }
+
+    arrowContainer.appendChild(leftArrow);
+    arrowContainer.appendChild(rightArrow);
+    document.body.appendChild(arrowContainer);
+    
+    // 根據當前模式設置箭頭顯示狀態
+    updateArrowsVisibility();
+}
+
+
+// 创建箭头按钮
+function createArrow(text, onClick) {
+    const arrow = document.createElement('button');
+    arrow.className = 'nav-arrow';
+    arrow.textContent = text;
+    arrow.onclick = onClick;
+    return arrow;
+}
+
+// 导航功能
+function navigateTour(direction) {
+    if (!tourState.isRunning) return;
+
+    if (tourState.currentTimeout) {
+        clearTimeout(tourState.currentTimeout);
+    }
+
+    if (direction === 'prev') {
+        tourState.currentIndex = (tourState.currentIndex - 1 + tourState.sequence.length) % tourState.sequence.length;
+    } else {
+        tourState.currentIndex = (tourState.currentIndex + 1) % tourState.sequence.length;
+    }
+    
+    // 更新箭頭顯示狀態
+    const arrowContainer = document.getElementById('navigationArrows');
+    if (arrowContainer) {
+        const leftArrow = arrowContainer.children[0];
+        // 在第一個點時隱藏左箭頭
+        leftArrow.style.visibility = tourState.currentIndex === 0 ? 'hidden' : 'visible';
+    }
+    
+    moveToNextSpot();
+}
+
+// 开始导览
+function startTour() {
     // 初始化导览序列
-    tourSequence = [
-        // 入口
+    tourState.sequence = [
         document.querySelector('.entrance-button'),
-        // 李欽泓标签
         document.querySelector('.tabButton[data-artist="lee"]'),
-        // 李欽泓的所有站点
         ...Array.from(document.querySelectorAll('.artistSpots.lee button')),
-        // 回到入口
         document.querySelector('.entrance-button'),
-        // 盧崇道标签
         document.querySelector('.tabButton[data-artist="lu"]'),
-        // 盧崇道的所有站点
         ...Array.from(document.querySelectorAll('.artistSpots.lu button')),
-        // 最后回到入口
         document.querySelector('.entrance-button')
     ];
-
-    // 开始导览
+    
     tourState.isRunning = true;
     tourState.isPaused = false;
     tourState.currentIndex = 0;
+    
+    // 添加导航箭头
+    addNavigationArrows();
+    
     updateTourButtons();
     moveToNextSpot();
 }
@@ -168,6 +286,8 @@ function pauseTour() {
 function resumeTour() {
     if (!tourState.isRunning) return;
     tourState.isPaused = false;
+    tourMode = 'auto'; // 恢復時切換回自動模式
+    updateArrowsVisibility(); // 更新箭頭顯示狀態
     moveToNextSpot();
     updateTourButtons();
 }
@@ -177,12 +297,21 @@ function stopTour() {
     tourState.isRunning = false;
     tourState.isPaused = false;
     tourState.currentIndex = 0;
+    tourState.sequence = [];
+    
     if (tourState.currentTimeout) {
         clearTimeout(tourState.currentTimeout);
     }
-    // 清除所有 hover 效果
+
+    // 移除导航箭头
+    const arrowContainer = document.getElementById('navigationArrows');
+    if (arrowContainer) {
+        arrowContainer.remove();
+    }
+
     updateCurrentSpotHighlight(null);
     updateTourButtons();
+    tourMode = null;
 }
 
 // 更新按钮状态
@@ -213,20 +342,19 @@ function updateTourButtons() {
 // 添加导览控制按钮
 window.addEventListener('load', function() {
     const controlsContainer = document.createElement('div');
-    controlsContainer.style.position = 'fixed';
-    controlsContainer.style.top = '20px';
-    controlsContainer.style.left = '20px';
-    controlsContainer.style.display = 'flex';
-    controlsContainer.style.gap = '10px';
- // 开始按钮
+    controlsContainer.className = 'tour-controls';
+
+    // 开始按钮
     const startButton = document.createElement('button');
     startButton.id = 'startTourBtn';
+    startButton.className = 'tour-button';
     startButton.innerHTML = '開始導覽<br>Start Tour';
     startButton.onclick = startAutoTour;
 
     // 暂停按钮
     const pauseButton = document.createElement('button');
     pauseButton.id = 'pauseTourBtn';
+    pauseButton.className = 'tour-button';
     pauseButton.innerHTML = '暫停導覽<br>Pause Tour';
     pauseButton.onclick = pauseTour;
     pauseButton.style.display = 'none';
@@ -234,41 +362,10 @@ window.addEventListener('load', function() {
     // 停止按钮
     const stopButton = document.createElement('button');
     stopButton.id = 'stopTourBtn';
+    stopButton.className = 'tour-button';
     stopButton.innerHTML = '停止導覽<br>Stop Tour';
     stopButton.onclick = stopTour;
     stopButton.style.display = 'none';
-
- // 设置按钮样式
-    [startButton, pauseButton, stopButton].forEach(button => {
-      // 基本样式
-        button.style.padding = '5px';  // 增加内边距
-        button.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
-        button.style.color = 'white';
-        button.style.border = 'none';
-        button.style.borderRadius = '5px';
-        button.style.cursor = 'pointer';
-        button.style.fontSize = '80%';  // 设置字体大小
-        button.style.lineHeight = '1.5';  // 设置行高，让换行更美观
-        button.style.textAlign = 'center';  // 确保文字居中
-        button.style.minWidth = '100px';  // 设置最小宽度，确保按钮大小一致
-        button.style.transition = 'all 0.3s ease'; // 添加过渡效果
-      
-         // 添加hover效果
-        button.addEventListener('mouseenter', function() {
-            this.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-            this.style.transform = 'scale(1.05)';
-            this.style.boxShadow = '0 0 10px rgba(255, 255, 255, 0.3)';
-        });
-
-        button.addEventListener('mouseleave', function() {
-            this.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
-            this.style.transform = 'scale(1)';
-            this.style.boxShadow = 'none';
-        });
-    });
-  
-  
-  
 
     // 添加按钮到容器
     controlsContainer.appendChild(startButton);
