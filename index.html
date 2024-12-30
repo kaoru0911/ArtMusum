@@ -83,7 +83,7 @@
 
         <a-entity light="color: white; intensity: 0.1; penumbra: 0.1; type: spot" position="-28.01565 38.44534 -113.4"
             rotation="-3.2400763314648056 90 179.78842653410103"></a-entity>
-        <a-image class="clickable"
+        <a-image id="image1" class="clickable"
             src="https://cdn.glitch.global/601c027d-141d-4c91-9464-abed6ddc9a18/1213_Lee1.webp?v=1735003502793"
             data-text="<h3>「色彩之王」李欽泓<br> 
                    &quotKing of Color&quotChinhung Lee</h3>" position="-49 35 -94.19697"
@@ -327,7 +327,7 @@
         <a-image class="clickable"
             src="https://cdn.glitch.global/601c027d-141d-4c91-9464-abed6ddc9a18/LeeMovieCover.webp?v=1735005028682"
             data-video-src="https://cdn.glitch.me/11d49ee3-cf71-44fa-81e1-fc28c2c2fb2c/Jade-like%20colors-Chinese_V2.mp4?v=1726418855702"
-            data-text="李欽泓談玉質化色彩影片封面" position="-398.16061 29.6294 27.489" scale="45.107 29.972 61.426"
+            data-text="李欽泓談玉質化色彩" position="-398.16061 29.6294 27.489" scale="45.107 29.972 61.426"
             rotation="0 90 0"></a-image>
 
         <a-image class="clickable"
@@ -710,10 +710,19 @@
         </div>
     </div>
 
+    <!-- 添加左右箭頭按鈕到頁面級別 -->
+    <button id="prevSpot" class="nav-arrow prev">
+        <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <button id="nextSpot" class="nav-arrow next">
+        <i class="fa-solid fa-chevron-right"></i>
+    </button>
+
     <div id="spotMenu" class="spotMenu">
         <button id="spotMenuToggleButton" class="toggleButton">
             <i class="arrow down"></i>
         </button>
+
 
         <div class="tabContainer">
             <button class="tabButton" data-artist="lee" data-position="-10.41433 35 -108.591"
