@@ -84,7 +84,7 @@ window.addEventListener("load", function () {
 
   function zoom(scale) {
     const zoomable = imageElement;
-    zoomable.style.width = `${100 + scale * 10}%`;
+    zoomable.style.width = `${100 + scale * 15}%`;
     zoomable.style.maxHeight = scale === 0 ? "100%" : "none";
   }
 

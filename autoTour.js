@@ -331,4 +331,29 @@ window.addEventListener('load', function() {
 
     // 添加容器到页面
     document.body.appendChild(controlsContainer);
+  
+   // 為所有可點擊元素添加暫停功能
+    document.querySelectorAll('.clickable').forEach(element => {
+        element.addEventListener('click', () => {
+            if (tourState.isRunning) {
+                pauseTour();
+            }
+        });
+    });
+
+    // 為所有選單按鈕添加暫停功能
+    document.querySelectorAll('.spotMenu button').forEach(button => {
+        button.addEventListener('click', () => {
+            if (tourState.isRunning) {
+                pauseTour();
+            }
+        });
+    });
+
+    // 為整個場景添加暫停功能（點擊模型等）
+    document.querySelector('a-scene').addEventListener('click', () => {
+        if (tourState.isRunning) {
+            pauseTour();
+        }
+    });
 });

@@ -12,11 +12,6 @@ class ResourceLoader {
         this.allResourcesLoaded = false;
         this.skyboxLoaded = false;
         
-        // 新增進度追踪
-        this.actualProgress = 0;
-        this.displayProgress = 0;
-        this.isEntering = false;
-        
         this.resourceGroups = {
             critical: [],
             primary: [],
@@ -65,7 +60,7 @@ class ResourceLoader {
                 if (this.forceEnterButton && this.criticalResourcesLoaded && this.skyboxLoaded) {
                     this.forceEnterButton.style.display = 'block';
                 }
-            }, 10000); // 縮短為10秒
+            }, 20000);
         }
     }
 
@@ -74,37 +69,43 @@ class ResourceLoader {
             if (!this.allResourcesLoaded && this.criticalResourcesLoaded && this.skyboxLoaded) {
                 this.enterScene();
             }
-        }, 30000); // 縮短為30秒
+        }, 60000);
     }
 
     collectResources() {
+        // 特別處理天空盒
         const skybox = document.querySelector('a-sky');
         if (skybox) {
             skybox.addEventListener('materialtextureloaded', () => {
                 console.log('天空盒材質已載入');
                 this.skyboxLoaded = true;
+                // 如果關鍵資源也已載入，則進入場景
                 if (this.criticalResourcesLoaded) {
                     this.enterScene();
                 }
             });
         }
 
+        // 收集關鍵 3D 模型
         this.resourceGroups.critical.push(
             ...Array.from(document.querySelectorAll('[gltf-model*="artMuseumTest34Wall.glb"]')),
             ...Array.from(document.querySelectorAll('[gltf-model*="artMuseumTest33-2Floor.glb"]'))
         );
 
+        // 收集主要圖片
         this.resourceGroups.primary.push(
             ...Array.from(document.querySelectorAll('a-image[src*="LifuArtLogo"]')),
             ...Array.from(document.querySelectorAll('a-image[src*="Lee1"]')),
             ...Array.from(document.querySelectorAll('a-image[src*="Lu1"]'))
         );
 
+        // 收集次要圖片
         this.resourceGroups.secondary.push(
             ...Array.from(document.querySelectorAll('a-image:not([src*="LifuArtLogo"]):not([src*="Lee1"]):not([src*="Lu1"])')),
             ...Array.from(document.querySelectorAll('img[src]'))
         );
 
+        // 過濾掉沒有 src 屬性的元素
         Object.keys(this.resourceGroups).forEach(key => {
             this.resourceGroups[key] = this.resourceGroups[key].filter(el => 
                 el.getAttribute('src') || el.getAttribute('gltf-model')
@@ -130,6 +131,7 @@ class ResourceLoader {
         this.criticalResourcesLoaded = true;
         console.log('關鍵資源加載完成');
         
+        // 檢查天空盒是否已載入
         if (this.skyboxLoaded) {
             this.enterScene();
         }
@@ -149,6 +151,9 @@ class ResourceLoader {
         );
         await Promise.all(promises);
         this.allResourcesLoaded = true;
+        if (this.skyboxLoaded) {
+            this.enterScene();
+        }
         console.log('所有資源加載完成');
     }
 
@@ -183,7 +188,7 @@ class ResourceLoader {
             img.onerror = (error) => {
                 console.error('圖片加載失敗:', src, error);
                 this.updateProgress(weightPercentage);
-                resolve();
+                resolve(); // 即使失敗也繼續
             };
 
             img.src = src;
@@ -200,13 +205,13 @@ class ResourceLoader {
                     this.updateProgress(weightPercentage);
                     resolve();
                 }
-            }, 500); // 縮短檢查間隔
+            }, 1000);
 
             setTimeout(() => {
                 clearInterval(checkInterval);
                 this.updateProgress(weightPercentage);
                 resolve();
-            }, 15000); // 縮短超時時間
+            }, 30000);
 
             modelEntity.addEventListener('model-error', () => {
                 clearInterval(checkInterval);
@@ -218,59 +223,42 @@ class ResourceLoader {
 
     updateProgress(increment) {
         this.loadedResources++;
-        this.actualProgress = Math.min(
+        const percentage = Math.min(
             Math.floor((this.loadedResources / this.totalResources) * 100),
-            99  // 最多只顯示到99%
+            100
         );
         
-        this.updateDisplayProgress();
-        console.log('加載進度:', this.displayProgress + '%');
-    }
-
-    updateDisplayProgress() {
-        const animate = () => {
-            if (this.displayProgress < this.actualProgress) {
-                this.displayProgress += 0.5; // 平滑更新
-                
-                if (this.progressBar) {
-                    this.progressBar.style.width = `${this.displayProgress}%`;
-                }
-                if (this.progressText) {
-                    this.progressText.textContent = `${Math.floor(this.displayProgress)}%`;
-                }
-                
-                requestAnimationFrame(animate);
-            }
-        };
+        this.progress = percentage;
         
-        requestAnimationFrame(animate);
+        if (this.progressBar) {
+            this.progressBar.style.width = `${this.progress}%`;
+        }
+        if (this.progressText) {
+            this.progressText.textContent = `${this.progress}%`;
+        }
+
+        console.log('加載進度:', this.progress + '%');
     }
 
     enterScene() {
-        if (this.criticalResourcesLoaded && this.skyboxLoaded && !this.isEntering) {
-            this.isEntering = true;
+        if (this.criticalResourcesLoaded && this.skyboxLoaded) {
+            if (this.progressBar) {
+                this.progressBar.style.width = '100%';
+            }
+            if (this.progressText) {
+                this.progressText.textContent = '100%';
+            }
             
-            // 更新到100%
-            this.actualProgress = 100;
-            this.updateDisplayProgress();
-
-            // 等待進度條動畫完成後再隱藏
-            const checkProgress = () => {
-                if (this.displayProgress >= 100) {
-                    if (this.loadingOverlay) {
-                        this.loadingOverlay.classList.add('hidden');
-                        setTimeout(() => {
-                            if (this.loadingOverlay.parentNode) {
-                                this.loadingOverlay.remove();
-                            }
-                        }, 300);
-                    }
-                } else {
-                    requestAnimationFrame(checkProgress);
+            setTimeout(() => {
+                if (this.loadingOverlay) {
+                    this.loadingOverlay.classList.add('hidden');
+                    setTimeout(() => {
+                        if (this.loadingOverlay.parentNode) {
+                            this.loadingOverlay.remove();
+                        }
+                    }, 500);
                 }
-            };
-            
-            requestAnimationFrame(checkProgress);
+            }, 1000);
         } else {
             console.log('等待天空盒和關鍵資源載入完成...');
         }
