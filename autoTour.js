@@ -4,7 +4,8 @@ let tourState = {
     isPaused: false,
     currentTimeout: null,
     currentIndex: 0,
-    sequence: [] // 存儲導覽序列
+    sequence: [], // 存儲導覽序列
+    currentAudio: null // 當前播放的音檔
 };
 
 function updateCurrentSpotHighlight(currentButton) {
@@ -107,16 +108,58 @@ function moveToNextSpot() {
 
         if (progress < 1) {
             requestAnimationFrame(animate);
-        } else if (!tourState.isPaused) {
-            // 如果未暫停，5秒後自動前進
+        } else {
+            // 移動完成後播放音檔
+            playSpotAudio(currentButton);
+        }
+    }
+
+    animate();
+}
+
+// 播放站點音檔
+function playSpotAudio(button) {
+    // 停止當前播放的音檔（如果有）
+    if (tourState.currentAudio) {
+        tourState.currentAudio.pause();
+        tourState.currentAudio.currentTime = 0;
+    }
+
+    const audioSrc = button.getAttribute('data-audio');
+    if (!audioSrc) {
+        // 如果沒有音檔，5秒後前進到下一站
+        if (!tourState.isPaused) {
             tourState.currentTimeout = setTimeout(() => {
                 tourState.currentIndex++;
                 moveToNextSpot();
             }, 5000);
         }
+        return;
     }
 
-    animate();
+    // 創建音頻元素
+    const audio = new Audio(audioSrc);
+    tourState.currentAudio = audio;
+    
+    // 音檔播放完成後前進到下一站
+    audio.onended = () => {
+        if (!tourState.isPaused && tourState.isRunning) {
+            tourState.currentIndex++;
+            moveToNextSpot();
+        }
+    };
+
+    // 開始播放
+    audio.play().catch(error => {
+        console.error('音檔播放失敗:', error);
+        // 播放失敗時，5秒後前進到下一站
+        if (!tourState.isPaused) {
+            tourState.currentTimeout = setTimeout(() => {
+                tourState.currentIndex++;
+                moveToNextSpot();
+            }, 5000);
+        }
+    });
 }
 
 // 开始导览
@@ -126,7 +169,7 @@ function startTour() {
         document.querySelector('.entrance-button'),
         document.querySelector('.tabButton[data-artist="lee"]'),
         ...Array.from(document.querySelectorAll('.artistSpots.lee button')),
-        document.querySelector('.entrance-button'),
+        // document.querySelector('.entrance-button'),
         document.querySelector('.tabButton[data-artist="lu"]'),
         ...Array.from(document.querySelectorAll('.artistSpots.lu button')),
         document.querySelector('.entrance-button')
@@ -135,6 +178,7 @@ function startTour() {
     tourState.isRunning = true;
     tourState.isPaused = false;
     tourState.currentIndex = 0;
+    tourState.currentAudio = null;
     
     addNavigationArrows();
     updateTourButtons();
@@ -209,8 +253,13 @@ function createArrow(direction, onClick) {
 function navigateTour(direction) {
     if (!tourState.isRunning) return;
 
+    // 清除當前的計時器和音檔
     if (tourState.currentTimeout) {
         clearTimeout(tourState.currentTimeout);
+    }
+    if (tourState.currentAudio) {
+        tourState.currentAudio.pause();
+        tourState.currentAudio.currentTime = 0;
     }
 
     if (direction === 'prev') {
@@ -239,6 +288,9 @@ function pauseTour() {
     if (tourState.currentTimeout) {
         clearTimeout(tourState.currentTimeout);
     }
+    if (tourState.currentAudio) {
+        tourState.currentAudio.pause();
+    }
     updateTourButtons();
 }
 
@@ -246,7 +298,11 @@ function pauseTour() {
 function resumeTour() {
     if (!tourState.isRunning) return;
     tourState.isPaused = false;
-    moveToNextSpot();
+    if (tourState.currentAudio) {
+        tourState.currentAudio.play();
+    } else {
+        moveToNextSpot();
+    }
     updateTourButtons();
 }
 
@@ -259,6 +315,11 @@ function stopTour() {
     
     if (tourState.currentTimeout) {
         clearTimeout(tourState.currentTimeout);
+    }
+    if (tourState.currentAudio) {
+        tourState.currentAudio.pause();
+        tourState.currentAudio.currentTime = 0;
+        tourState.currentAudio = null;
     }
 
     // 移除导航箭头
@@ -332,7 +393,7 @@ window.addEventListener('load', function() {
     // 添加容器到页面
     document.body.appendChild(controlsContainer);
   
-   // 為所有可點擊元素添加暫停功能
+    // 為所有可點擊元素添加暫停功能
     document.querySelectorAll('.clickable').forEach(element => {
         element.addEventListener('click', () => {
             if (tourState.isRunning) {
