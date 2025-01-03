@@ -8,6 +8,26 @@ let tourState = {
     currentAudio: null // 當前播放的音檔
 };
 
+// 音檔快取
+const audioCache = window.audioCache || new Map();
+
+// 檢查是否為移動設備
+const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+// 音檔初始化函數
+async function initAudio(audio) {
+    if (!audio) return false;
+    
+    try {
+        audio.currentTime = 0;
+        audio.load();
+        return true;
+    } catch (error) {
+        console.log('音檔初始化失敗:', error);
+        return false;
+    }
+}
+
 function updateCurrentSpotHighlight(currentButton) {
     // 移除所有按鈕的 hover 效果
     document.querySelectorAll('.spotMenu button').forEach(btn => {
@@ -20,174 +40,47 @@ function updateCurrentSpotHighlight(currentButton) {
     }
 }
 
-// 定义移动到下一个点的函数
-function moveToNextSpot() {
-    if (!tourState.isRunning || tourState.currentIndex >= tourState.sequence.length) {
-        stopTour();
-        return;
-    }
-
-    const currentButton = tourState.sequence[tourState.currentIndex];
+// 處理標籤按鈕切換
+function handleTabButton(button) {
+    // 移除所有active状态
+    document.querySelectorAll('.tabButton, .entrance-button')
+        .forEach(btn => btn.classList.remove('active'));
     
-    // 更新當前站點的 hover 效果
-    updateCurrentSpotHighlight(currentButton);
-    
-    // 如果是标签按钮，触发标签切换
-    if (currentButton.classList.contains('tabButton') || 
-        currentButton.classList.contains('entrance-button')) {
-        // 移除所有active状态
-        document.querySelectorAll('.tabButton, .entrance-button')
-            .forEach(btn => btn.classList.remove('active'));
-        
-        // 隐藏所有艺术家的spots
-        document.querySelectorAll('.artistSpots').forEach(spots => {
-            spots.classList.remove('active');
-        });
-        
-        // 添加新的active状态
-        currentButton.classList.add('active');
-        
-        // 显示选中艺术家的spots
-        const artist = currentButton.getAttribute('data-artist');
-        const targetSpots = currentButton.classList.contains('entrance-button') 
-            ? document.querySelector('.artistSpots') 
-            : document.querySelector(`.artistSpots.${artist}`);
-        
-        if (targetSpots) {
-            targetSpots.classList.add('active');
-        }
-    }
-
-    // 获取目标位置和旋转角度
-    const position = currentButton.getAttribute("data-position").split(" ");
-    const rotation = currentButton.getAttribute("data-rotation").split(" ");
-    const cameraEl = document.getElementById("camera");
-    const lookControls = cameraEl.components["look-controls"];
-
-    // 获取当前位置和目标位置
-    const currentPos = cameraEl.getAttribute("position");
-    const targetPos = {
-        x: parseFloat(position[0]),
-        y: parseFloat(position[1]),
-        z: parseFloat(position[2])
-    };
-  
-    // 获取当前旋转和目标旋转
-    const currentRotX = lookControls.pitchObject.rotation.x;
-    const currentRotY = lookControls.yawObject.rotation.y;
-    const targetRotX = window.AFRAME.THREE.MathUtils.degToRad(parseFloat(rotation[0]));
-    let targetRotY = window.AFRAME.THREE.MathUtils.degToRad(parseFloat(rotation[1]));
-
-    // 优化旋转路径
-    const PI2 = Math.PI * 2;
-    const deltaY = ((targetRotY - currentRotY) % PI2 + PI2 * 3/2) % PI2 - PI2/2;
-    targetRotY = currentRotY + deltaY;
-
-    const startTime = Date.now();
-    const moveDuration = 3000; // 移动时间3秒
-
-    function animate() {
-        if (!tourState.isRunning) return;
-
-        const elapsedTime = Date.now() - startTime;
-        const progress = Math.min(elapsedTime / moveDuration, 1);
-
-        // 使用更平滑的缓动函数
-        const easeProgress = 1 - Math.pow(1 - progress, 3);
-
-        // 更新位置
-        cameraEl.setAttribute("position", {
-            x: currentPos.x + (targetPos.x - currentPos.x) * easeProgress,
-            y: currentPos.y + (targetPos.y - currentPos.y) * easeProgress,
-            z: currentPos.z + (targetPos.z - currentPos.z) * easeProgress
-        });
-
-        // 更新旋转
-        lookControls.pitchObject.rotation.x = currentRotX + (targetRotX - currentRotX) * easeProgress;
-        lookControls.yawObject.rotation.y = currentRotY + deltaY * easeProgress;
-
-        if (progress < 1) {
-            requestAnimationFrame(animate);
-        } else {
-            // 移動完成後播放音檔
-            playSpotAudio(currentButton);
-        }
-    }
-
-    animate();
-}
-
-// 播放站點音檔
-function playSpotAudio(button) {
-    // 停止當前播放的音檔（如果有）
-    if (tourState.currentAudio) {
-        tourState.currentAudio.pause();
-        tourState.currentAudio.currentTime = 0;
-    }
-
-    const audioSrc = button.getAttribute('data-audio');
-    if (!audioSrc) {
-        // 如果沒有音檔，5秒後前進到下一站
-        if (!tourState.isPaused) {
-            tourState.currentTimeout = setTimeout(() => {
-                tourState.currentIndex++;
-                moveToNextSpot();
-            }, 5000);
-        }
-        return;
-    }
-
-    // 創建音頻元素
-    const audio = new Audio(audioSrc);
-    tourState.currentAudio = audio;
-    
-    // 音檔播放完成後前進到下一站
-    audio.onended = () => {
-        if (!tourState.isPaused && tourState.isRunning) {
-            tourState.currentIndex++;
-            moveToNextSpot();
-        }
-    };
-
-    // 開始播放
-    audio.play().catch(error => {
-        console.error('音檔播放失敗:', error);
-        // 播放失敗時，5秒後前進到下一站
-        if (!tourState.isPaused) {
-            tourState.currentTimeout = setTimeout(() => {
-                tourState.currentIndex++;
-                moveToNextSpot();
-            }, 5000);
-        }
+    // 隐藏所有艺术家的spots
+    document.querySelectorAll('.artistSpots').forEach(spots => {
+        spots.classList.remove('active');
     });
+    
+    // 添加新的active状态
+    button.classList.add('active');
+    
+    // 显示选中艺术家的spots
+    const artist = button.getAttribute('data-artist');
+    const targetSpots = button.classList.contains('entrance-button') 
+        ? document.querySelector('.artistSpots') 
+        : document.querySelector(`.artistSpots.${artist}`);
+    
+    if (targetSpots) {
+        targetSpots.classList.add('active');
+    }
 }
 
-// 开始导览
-function startTour() {
-    // 初始化导览序列
-    tourState.sequence = [
-        document.querySelector('.entrance-button'),
-        document.querySelector('.tabButton[data-artist="lee"]'),
-        ...Array.from(document.querySelectorAll('.artistSpots.lee button')),
-        // document.querySelector('.entrance-button'),
-        document.querySelector('.tabButton[data-artist="lu"]'),
-        ...Array.from(document.querySelectorAll('.artistSpots.lu button')),
-        document.querySelector('.entrance-button')
-    ];
+// 创建箭头元素
+function createArrow(direction, text, onClick) {
+    const arrow = document.createElement('button');
+    arrow.className = `nav-arrow ${direction}`;
+    arrow.innerHTML = `
+        <i class="fa-solid fa-chevron-${direction === 'prev' ? 'left' : 'right'}"></i>
+        <span class="arrow-text">${text}</span>
+    `;
     
-    tourState.isRunning = true;
-    tourState.isPaused = false;
-    tourState.currentIndex = 0;
-    tourState.currentAudio = null;
-    
-    addNavigationArrows();
-    updateTourButtons();
-    moveToNextSpot();
+    arrow.onclick = onClick;
+    return arrow;
 }
 
-// 添加导航箭头
-function addNavigationArrows() {
-    // 如果已存在箭头，则先移除
+// 创建导航箭头
+function setupNavigationArrows() {
+    // 移除現有的箭頭（如果有）
     const existingArrows = document.getElementById('navigationArrows');
     if (existingArrows) {
         existingArrows.remove();
@@ -195,58 +88,17 @@ function addNavigationArrows() {
 
     const arrowContainer = document.createElement('div');
     arrowContainer.id = 'navigationArrows';
-    arrowContainer.classList.add('manual-mode');
+    arrowContainer.className = 'manual-mode';
 
-    const leftArrow = createArrow('prev', () => {
-        pauseTour(); // 手動操作時暫停自動導覽
-        navigateTour('prev');
-    });
-    const rightArrow = createArrow('next', () => {
-        pauseTour(); // 手動操作時暫停自動導覽
-        navigateTour('next');
-    });
-
-    // 在初始狀態下隱藏左箭頭
-    if (tourState.currentIndex === 0) {
-        leftArrow.style.visibility = 'hidden';
-    }
+    const leftArrow = createArrow('prev', '上一站<br>Previous', () => navigateTour('prev'));
+    const rightArrow = createArrow('next', '下一站<br>Next', () => navigateTour('next'));
 
     arrowContainer.appendChild(leftArrow);
     arrowContainer.appendChild(rightArrow);
     document.body.appendChild(arrowContainer);
-}
 
-// 创建箭头按钮
-function createArrow(direction, onClick) {
-    const arrow = document.createElement('button');
-    arrow.className = `nav-arrow ${direction === 'prev' ? 'prev' : 'next'}`;
-    
-    // 創建箭頭圖標
-    const arrowIcon = document.createElement('span');
-    arrowIcon.className = 'arrow-icon';
-    arrowIcon.textContent = direction === 'prev' ? '←' : '→';
-    
-    // 創建文字容器
-    const textContainer = document.createElement('div');
-    textContainer.className = 'arrow-text';
-    
-    if (direction === 'prev') {
-        textContainer.innerHTML = '上一步<br>Previous';
-    } else {
-        textContainer.innerHTML = '下一步<br>Next';
-    }
-    
-    // 根據方向決定元素順序
-    if (direction === 'prev') {
-        arrow.appendChild(arrowIcon);
-        arrow.appendChild(textContainer);
-    } else {
-        arrow.appendChild(textContainer);
-        arrow.appendChild(arrowIcon);
-    }
-    
-    arrow.onclick = onClick;
-    return arrow;
+    // 初始化箭頭顯示狀態
+    leftArrow.style.visibility = 'hidden'; // 在第一個點時隱藏左箭頭
 }
 
 // 导航功能
@@ -271,15 +123,156 @@ function navigateTour(direction) {
     // 更新箭頭顯示狀態
     const arrowContainer = document.getElementById('navigationArrows');
     if (arrowContainer) {
-        const leftArrow = arrowContainer.children[0];
-        const rightArrow = arrowContainer.children[1];
-        // 在第一個點時隱藏左箭頭
-        leftArrow.style.visibility = tourState.currentIndex === 0 ? 'hidden' : 'visible';
-        // 在最後一個點時隱藏右箭頭
-        rightArrow.style.visibility = tourState.currentIndex === tourState.sequence.length - 1 ? 'hidden' : 'visible';
+        const leftArrow = arrowContainer.querySelector('.nav-arrow.prev');
+        const rightArrow = arrowContainer.querySelector('.nav-arrow.next');
+        if (leftArrow) leftArrow.style.visibility = tourState.currentIndex === 0 ? 'hidden' : 'visible';
+        if (rightArrow) rightArrow.style.visibility = tourState.currentIndex === tourState.sequence.length - 1 ? 'hidden' : 'visible';
     }
     
     moveToNextSpot();
+}
+
+// 定义移动到下一个点的函数
+function moveToNextSpot() {
+    if (!tourState.isRunning || tourState.currentIndex >= tourState.sequence.length) {
+        stopTour();
+        return;
+    }
+
+    const currentButton = tourState.sequence[tourState.currentIndex];
+    updateCurrentSpotHighlight(currentButton);
+    
+    if (currentButton.classList.contains('tabButton') || 
+        currentButton.classList.contains('entrance-button')) {
+        handleTabButton(currentButton);
+    }
+
+    const position = currentButton.getAttribute("data-position").split(" ");
+    const rotation = currentButton.getAttribute("data-rotation").split(" ");
+    const cameraEl = document.getElementById("camera");
+    const lookControls = cameraEl.components["look-controls"];
+
+    const startTime = Date.now();
+    const moveDuration = 3000;
+    const currentPos = cameraEl.getAttribute("position");
+    const targetPos = {
+        x: parseFloat(position[0]),
+        y: parseFloat(position[1]),
+        z: parseFloat(position[2])
+    };
+
+    const currentRotX = lookControls.pitchObject.rotation.x;
+    const currentRotY = lookControls.yawObject.rotation.y;
+    const targetRotX = window.AFRAME.THREE.MathUtils.degToRad(parseFloat(rotation[0]));
+    let targetRotY = window.AFRAME.THREE.MathUtils.degToRad(parseFloat(rotation[1]));
+
+    const PI2 = Math.PI * 2;
+    const deltaY = ((targetRotY - currentRotY) % PI2 + PI2 * 3/2) % PI2 - PI2/2;
+    targetRotY = currentRotY + deltaY;
+
+    // 準備音檔
+    const audioSrc = currentButton.getAttribute('data-audio');
+    let audio = null;
+    if (audioSrc && audioCache.has(audioSrc)) {
+        audio = audioCache.get(audioSrc);
+        audio.currentTime = 0;
+        audio.load();
+    }
+
+    function animate() {
+        if (!tourState.isRunning || tourState.isPaused) return;
+
+        const elapsedTime = Date.now() - startTime;
+        const progress = Math.min(elapsedTime / moveDuration, 1);
+        const easeProgress = 1 - Math.pow(1 - progress, 3);
+
+        cameraEl.setAttribute("position", {
+            x: currentPos.x + (targetPos.x - currentPos.x) * easeProgress,
+            y: currentPos.y + (targetPos.y - currentPos.y) * easeProgress,
+            z: currentPos.z + (targetPos.z - currentPos.z) * easeProgress
+        });
+
+        lookControls.pitchObject.rotation.x = currentRotX + (targetRotX - currentRotX) * easeProgress;
+        lookControls.yawObject.rotation.y = currentRotY + deltaY * easeProgress;
+
+        if (progress < 1) {
+            requestAnimationFrame(animate);
+        } else {
+            // 移動完成後播放音檔
+            if (audio) {
+                // 停止之前的音檔
+                if (tourState.currentAudio) {
+                    tourState.currentAudio.pause();
+                    tourState.currentAudio.currentTime = 0;
+                }
+                
+                tourState.currentAudio = audio;
+                audio.play().catch(error => {
+                    console.error('音檔播放失敗:', error);
+                    if (!tourState.isPaused) {
+                        tourState.currentTimeout = setTimeout(() => {
+                            tourState.currentIndex++;
+                            moveToNextSpot();
+                        }, 5000);
+                    }
+                });
+
+                audio.onended = () => {
+                    if (!tourState.isPaused) {
+                        tourState.currentIndex++;
+                        moveToNextSpot();
+                    }
+                };
+            } else {
+                if (!tourState.isPaused) {
+                    tourState.currentTimeout = setTimeout(() => {
+                        tourState.currentIndex++;
+                        moveToNextSpot();
+                    }, 5000);
+                }
+            }
+        }
+    }
+
+    animate();
+}
+
+// 开始导览
+async function startTour() {
+    tourState.sequence = [
+        document.querySelector('.entrance-button'),
+        document.querySelector('.tabButton[data-artist="lee"]'),
+        ...Array.from(document.querySelectorAll('.artistSpots.lee button')),
+        document.querySelector('.tabButton[data-artist="lu"]'),
+        ...Array.from(document.querySelectorAll('.artistSpots.lu button'))
+    ].filter(Boolean);
+    
+    if (tourState.sequence.length === 0) {
+        console.error('找不到導覽點');
+        return;
+    }
+
+    try {
+        // 預先準備第一個站點的音檔
+        const firstButton = tourState.sequence[0];
+        const firstAudioSrc = firstButton.getAttribute('data-audio');
+        
+        if (firstAudioSrc && audioCache.has(firstAudioSrc)) {
+            const audio = audioCache.get(firstAudioSrc);
+            await initAudio(audio);
+        }
+        
+        tourState.isRunning = true;
+        tourState.isPaused = false;
+        tourState.currentIndex = 0;
+        
+        updateTourButtons();
+        setupNavigationArrows();
+        moveToNextSpot();
+        
+    } catch (error) {
+        console.error('啟動導覽時發生錯誤:', error);
+    }
 }
 
 // 暂停导览
@@ -362,14 +355,12 @@ window.addEventListener('load', function() {
     const controlsContainer = document.createElement('div');
     controlsContainer.className = 'tour-controls';
 
-    // 开始按钮
     const startButton = document.createElement('button');
     startButton.id = 'startTourBtn';
     startButton.className = 'tour-button';
     startButton.innerHTML = '開始導覽<br>Start Tour';
     startButton.onclick = startTour;
 
-    // 暂停按钮
     const pauseButton = document.createElement('button');
     pauseButton.id = 'pauseTourBtn';
     pauseButton.className = 'tour-button';
@@ -377,7 +368,6 @@ window.addEventListener('load', function() {
     pauseButton.onclick = pauseTour;
     pauseButton.style.display = 'none';
 
-    // 停止按钮
     const stopButton = document.createElement('button');
     stopButton.id = 'stopTourBtn';
     stopButton.className = 'tour-button';
@@ -385,12 +375,10 @@ window.addEventListener('load', function() {
     stopButton.onclick = stopTour;
     stopButton.style.display = 'none';
 
-    // 添加按钮到容器
     controlsContainer.appendChild(startButton);
     controlsContainer.appendChild(pauseButton);
     controlsContainer.appendChild(stopButton);
 
-    // 添加容器到页面
     document.body.appendChild(controlsContainer);
   
     // 為所有可點擊元素添加暫停功能
@@ -402,7 +390,6 @@ window.addEventListener('load', function() {
         });
     });
 
-    // 為所有選單按鈕添加暫停功能
     document.querySelectorAll('.spotMenu button').forEach(button => {
         button.addEventListener('click', () => {
             if (tourState.isRunning) {
@@ -411,7 +398,6 @@ window.addEventListener('load', function() {
         });
     });
 
-    // 為整個場景添加暫停功能（點擊模型等）
     document.querySelector('a-scene').addEventListener('click', () => {
         if (tourState.isRunning) {
             pauseTour();
