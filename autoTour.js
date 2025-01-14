@@ -170,8 +170,16 @@ function moveToNextSpot() {
     const deltaY = ((targetRotY - currentRotY) % PI2 + PI2 * 3/2) % PI2 - PI2/2;
     targetRotY = currentRotY + deltaY;
 
-    // 準備音檔
-    const audioSrc = currentButton.getAttribute('data-audio');
+     // 準備音檔
+    let audioSrc;
+    // 檢查是否為最後一個點位且是入口
+    if (tourState.currentIndex === tourState.sequence.length - 1 && 
+        currentButton.classList.contains('entrance-button')) {
+        audioSrc = "https://cdn.glitch.global/9c60ad3e-c930-4e5c-af67-fbd6dce341dd/end.mp3?v=1736844211333"; // 替換成實際的結尾音檔URL
+    } else {
+        audioSrc = currentButton.getAttribute('data-audio');
+    }
+
     let audio = null;
     if (audioSrc && audioCache.has(audioSrc)) {
         audio = audioCache.get(audioSrc);
@@ -244,7 +252,8 @@ async function startTour() {
         document.querySelector('.tabButton[data-artist="lee"]'),
         ...Array.from(document.querySelectorAll('.artistSpots.lee button')),
         document.querySelector('.tabButton[data-artist="lu"]'),
-        ...Array.from(document.querySelectorAll('.artistSpots.lu button'))
+        ...Array.from(document.querySelectorAll('.artistSpots.lu button')),
+        document.querySelector('.entrance-button')  // 添加回到入口的點位
     ].filter(Boolean);
     
     if (tourState.sequence.length === 0) {
@@ -260,6 +269,14 @@ async function startTour() {
         if (firstAudioSrc && audioCache.has(firstAudioSrc)) {
             const audio = audioCache.get(firstAudioSrc);
             await initAudio(audio);
+        }
+        
+        // 預先準備結尾音檔
+        const endingAudioSrc = "https://cdn.glitch.global/9c60ad3e-c930-4e5c-af67-fbd6dce341dd/end.mp3?v=1736844211333"; // 替換成實際的結尾音檔URL
+        if (!audioCache.has(endingAudioSrc)) {
+            const endingAudio = new Audio(endingAudioSrc);
+            audioCache.set(endingAudioSrc, endingAudio);
+            await initAudio(endingAudio);
         }
         
         tourState.isRunning = true;
